@@ -1,0 +1,37 @@
+{
+  "name": "@jds-project/jds-project",
+  "description": "Project Management System",
+  "private": true,
+  "repository": "https://github.com/rem029/jds-project",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "kill-ports": "kill-port --port 3030 && kill-port --port 6060",
+    "bootstrap": "lerna bootstrap",
+    "start": "lerna run start --parallel --scope @jds-project/*",
+    "start:staging": "lerna run build:run --parallel --scope @jds-project/backend",
+    "start:pm2:staging": "pm2 start server.sh --interpreter=bash --name=pm-app-staging",
+    "build": "lerna run build --parallel --scope @jds-project/*",
+    "build:frontend": "lerna run build --scope @jds-project/frontend",
+    "build:backend": "lerna run build --scope @jds-project/backend",
+    "lint": "lerna run lint --parallel --scope @jds-project/*",
+    "publish:version": "lerna version --conventional-commits"
+  },
+  "devDependencies": {
+    "kill-port": "^1.6.1",
+    "lerna": "^4.0.0",
+    "lerna-changelog": "^2.2.0",
+    "lerna-wizard": "^1.1.1"
+  },
+  "changelog": {
+    "labels": {
+      "feature": "New Feature",
+      "fix": "Bug Fix",
+      "tech": "Tech"
+    }
+  },
+  "version": "0.0.0"
+}

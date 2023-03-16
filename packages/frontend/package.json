@@ -1,0 +1,80 @@
+{
+	"name": "@jds-project/frontend",
+	"description": "Frontend for wakra project",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"@emotion/react": "^11.9.0",
+		"@emotion/styled": "^11.8.1",
+		"@mui/icons-material": "^5.6.1",
+		"@mui/lab": "^5.0.0-alpha.75",
+		"@mui/material": "^5.6.1",
+		"@mui/x-data-grid": "^5.12.0",
+		"@testing-library/jest-dom": "^5.16.4",
+		"@testing-library/react": "^13.0.1",
+		"@testing-library/user-event": "^14.1.0",
+		"@types/jest": "^27.4.1",
+		"@types/json2csv": "^5.0.3",
+		"@types/node": "^17.0.24",
+		"@types/react": "^18.0.5",
+		"@types/react-csv": "^1.1.2",
+		"@types/react-dom": "^18.0.0",
+		"@jds-project/common": "^1.1.0-alpha.9",
+		"axios": "^0.26.1",
+		"buffer": "^6.0.3",
+		"date-fns": "^2.28.0",
+		"highcharts": "^10.0.0",
+		"highcharts-react-official": "^3.1.0",
+		"json2csv": "^5.0.7",
+		"notistack": "^2.0.4",
+		"react": "^18.0.0",
+		"react-csv": "^2.2.2",
+		"react-dom": "^18.0.0",
+		"react-router-dom": "^6.3.0",
+		"react-scripts": "^5.0.1",
+		"typescript": "^4.6.3",
+		"web-vitals": "^2.1.4"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build --max_old_space_size=512",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject",
+		"lint": "eslint src/**/*.ts src/**/*.tsx"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"@types/lodash": "^4.14.181",
+		"@typescript-eslint/eslint-plugin": "^5.19.0",
+		"@typescript-eslint/parser": "^5.19.0",
+		"cross-env": "^7.0.3",
+		"eslint": "^8.13.0",
+		"eslint-config-airbnb": "^19.0.4",
+		"eslint-config-standard": "^16.0.3",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-jsx-a11y": "^6.5.1",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^6.0.0",
+		"eslint-plugin-react": "^7.29.4",
+		"eslint-plugin-react-hooks": "^4.4.0",
+		"prettier": "^2.6.2"
+	},
+	"changelog": {
+		"labels": {
+			"feature": "New Feature",
+			"fix": "Bug Fix",
+			"tech": "Tech"
+		}
+	}
+}
