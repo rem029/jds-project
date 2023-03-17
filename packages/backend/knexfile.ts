@@ -1,5 +1,4 @@
-import { logger } from "utilities/logger";
-import knex from "knex";
+import "dotenv/config";
 import type { Knex } from "knex";
 
 const DEFAULT_DB_PORT = Number(process.env.DB_PORT) || 5433;
@@ -50,19 +49,21 @@ export const DEFAULT_KNEX_CONFIG: Knex.Config = {
 	},
 };
 
-export const knexPostgres = knex({
-	client: "pg",
-	...DEFAULT_KNEX_CONFIG,
-	log: {
-		enableColors: true,
-		warn(message: any) {
-			logger.warn(message);
-		},
-		error(message: any) {
-			logger.error(message);
-		},
-		debug(message: any) {
-			logger.info(message);
-		},
+const config: { [key: string]: Knex.Config } = {
+	development: {
+		...DEFAULT_KNEX_CONFIG,
+		migrations: { directory: ["./migrations/common"], tableName: "knex_migrations", schemaName: "common" },
 	},
-});
+
+	staging: {
+		...DEFAULT_KNEX_CONFIG,
+		migrations: { directory: ["./migrations/common"], tableName: "knex_migrations", schemaName: "common" },
+	},
+
+	production: {
+		...DEFAULT_KNEX_CONFIG,
+		migrations: { directory: ["./migrations/common"], tableName: "knex_migrations", schemaName: "common" },
+	},
+};
+
+module.exports = config;

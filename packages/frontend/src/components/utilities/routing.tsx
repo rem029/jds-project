@@ -1,18 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {
-	Dashboard,
-	ProtectedRoute,
-	Login,
-	DetailProgressReport,
-	SummaryProgressReport,
-	ActivityMaster,
-	DeliverablesMaster,
-} from "components";
+import { Dashboard, ProtectedRoute, Login } from "components";
 import { Main } from "pages/main";
 import { NotFound } from "pages/notFound";
 import { StoreProvider } from "store";
 import { useEffect } from "react";
-import { InspectionEntry, InspectionTable } from "components/projects/inspection";
 
 export const Routing = (): JSX.Element => {
 	useEffect(() => {
@@ -34,18 +25,6 @@ export const Routing = (): JSX.Element => {
 					>
 						<Route path="/" element={<Dashboard />} />
 						<Route path={"dashboard"} element={<Dashboard />} />
-
-						<Route path={"projects/"} element={<NotFound />} />
-						<Route path={"projects/inspections/"} element={<InspectionTable />} />
-						<Route path={"projects/inspections/entry"} element={<InspectionEntry />} />
-
-						<Route path={"report/"} element={<NotFound />} />
-						<Route path={"report/detail-progress"} element={<DetailProgressReport />} />
-						<Route path={"report/summary-progress"} element={<SummaryProgressReport />} />
-
-						<Route path={"master/"} element={<NotFound />} />
-						<Route path={"master/deliverables"} element={<DeliverablesMaster />} />
-						<Route path={"master/activities"} element={<ActivityMaster />} />
 					</Route>
 
 					<Route path="*" element={<NotFound />} />

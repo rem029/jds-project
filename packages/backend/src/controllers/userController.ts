@@ -1,32 +1,24 @@
-import { knexMySQL } from "services/database";
+import { knexPostgres } from "services/database";
 import { UserInfo } from "@jds-project/common";
+import { logger } from "utilities/logger";
 
-export const getUserInfoController = async (body: { userId: string }): Promise<UserInfo> => {
-	const { userId } = body;
+export const getUserInfoController = async (body: { email: string }): Promise<UserInfo> => {
+	const { email } = body;
+	logger.info("@getUserInfoController");
 
-	const results = await knexMySQL.raw(
+	const results = await knexPostgres.raw(
 		`
 			SELECT 
-				Usr_Id,
-				Usr_Name,
-				Usr_Email,
-				Usr_Ph,
-				IsAdmin,
-				IsActive,
-				IsAdd,
-				IsEdit,
-				IsCancel,
-				IsDelete
+				*
 			FROM 
-				userm
+				common.users
 			WHERE
-				Usr_Id=?;`,
-		[userId]
+				email=?;`,
+		[email]
 	);
 
-	if (!results[0].length) throw new Error("No user found");
-	if (results.length && results[0][0].IsActive < 1) throw new Error("User not active.");
+	if (!results.rows.length) throw new Error("No user found");
 
-	const response = { ...results[0][0] } as UserInfo;
+	const response = { ...results.rows[0] } as UserInfo;
 	return response;
 };

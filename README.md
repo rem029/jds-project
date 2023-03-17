@@ -8,10 +8,15 @@ Apps required (skip if already installed in your workstation)
 
 1. [NodeJS](https://nodejs.org/en/)
 2. [Git Bash](https://git-scm.com/downloads)
-3. [Hyper](https://hyper.is/) (Optional)
-4. Python from Microsoft Store
-5. [Visual Studio Build Tools](https://github.com/nodejs/node-gyp#on-windows)
-6. Install lerna
+3. Python from Microsoft Store (for yarn)
+4. [Visual Studio Build Tools](https://github.com/nodejs/node-gyp#on-windows)
+5. Lerna package
+6. Postgres. References below:
+    - https://www.postgresql.org/download/linux/ubuntu/
+    - https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql-linux/
+
+7. Create postgres user with default password 123
+
 
 ```sh
 yarn add global lerna

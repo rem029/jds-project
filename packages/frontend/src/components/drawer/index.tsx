@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
-import { Drawer as DrawerMUI } from "@mui/material";
+import { Button, Drawer as DrawerMUI } from "@mui/material";
 import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
@@ -12,7 +12,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { grey } from "@mui/material/colors";
-import { CircularProgress, Collapse, Link, ListItemButton, Tooltip } from "@mui/material";
+import { CircularProgress, Collapse, Link, ListItemButton } from "@mui/material";
 import {
 	ExitToApp,
 	ExpandLess,
@@ -28,7 +28,6 @@ import { URL_USER } from "utils/constants";
 import { getToken } from "utils/storage";
 import { getUserContext } from "store/userProvider";
 import { dateHelperFormatProper } from "helpers/dateHelper";
-import { DrawerListItemWeather } from "./drawerListItemWeather";
 
 interface AppDrawerProps extends MuiAppBarProps {
 	open?: boolean;
@@ -72,7 +71,7 @@ export const Drawer = ({ open, setOpen, width }: AppDrawerProps): JSX.Element =>
 		if (userError) setUserName("Error");
 
 		if (!userLoading && userSuccess && userData) {
-			setUserName(userData.Usr_Name);
+			setUserName(userData.email);
 		}
 	}, [userData, userLoading, userSuccess, userError]);
 
@@ -166,21 +165,11 @@ export const Drawer = ({ open, setOpen, width }: AppDrawerProps): JSX.Element =>
 			<List>
 				<ListItem>
 					<ListItemText>
-						<Typography variant="body1" noWrap letterSpacing={1}>
+						<Typography variant="caption" noWrap letterSpacing={1}>
 							{userLoading ? <CircularProgress size={24} /> : `Hello, ${userName}`}
 						</Typography>
 					</ListItemText>
-
-					<ListItemIcon>
-						<Tooltip title="Would you like to logout?">
-							<IconButton onClick={handleLogout}>
-								<ExitToApp />
-							</IconButton>
-						</Tooltip>
-					</ListItemIcon>
 				</ListItem>
-
-				<DrawerListItemWeather />
 
 				<ListItem>
 					<Typography variant="caption" noWrap letterSpacing={1}>
@@ -188,7 +177,9 @@ export const Drawer = ({ open, setOpen, width }: AppDrawerProps): JSX.Element =>
 					</Typography>
 				</ListItem>
 			</List>
+
 			<Divider />
+
 			<List>
 				<ListItem button key={"Dashboard"} onClick={() => handleChangePage("Dashboard")}>
 					<ListItemIcon>
@@ -201,39 +192,41 @@ export const Drawer = ({ open, setOpen, width }: AppDrawerProps): JSX.Element =>
 					</ListItemText>
 				</ListItem>
 
-				{collapsibleList("Projects", <InfoOutlined htmlColor={colorIcon} />, [
+				{collapsibleList("Tracking", <InfoOutlined htmlColor={colorIcon} />, [
 					{
-						label: "Inspection",
-						url: "projects/inspections/",
+						label: "Complains",
+						url: "tracking/complains/",
 						icon: <TableRowsOutlined htmlColor={colorIcon} fontSize="small" />,
 					},
 				])}
 
-				{collapsibleList("Masters", <InfoOutlined htmlColor={colorIcon} />, [
+				{collapsibleList("Users", <InfoOutlined htmlColor={colorIcon} />, [
 					{
-						label: "Deliverables",
-						url: "master/deliverables",
-						icon: <TableRowsOutlined htmlColor={colorIcon} fontSize="small" />,
-					},
-					{
-						label: "Activity",
-						url: "master/activities",
+						label: "List",
+						url: "users/list/",
 						icon: <TableRowsOutlined htmlColor={colorIcon} fontSize="small" />,
 					},
 				])}
+			</List>
 
-				{collapsibleList("Reporting", <InfoOutlined htmlColor={colorIcon} />, [
-					{
-						label: "Progress Detail Report",
-						url: "report/detail-progress",
-						icon: <TableRowsOutlined htmlColor={colorIcon} fontSize="small" />,
-					},
-					{
-						label: "Progress Summary Report",
-						url: "report/summary-progress",
-						icon: <TableRowsOutlined htmlColor={colorIcon} fontSize="small" />,
-					},
-				])}
+			<List
+				sx={{
+					height: "100%",
+					display: "flex",
+					justifyContent: "flex-start",
+					alignItems: "flex-end",
+					p: 1,
+				}}
+			>
+				<Button
+					fullWidth
+					variant="outlined"
+					onClick={handleLogout}
+					startIcon={<ExitToApp />}
+					color="info"
+				>
+					Logout
+				</Button>
 			</List>
 			<Divider />
 		</DrawerMUI>

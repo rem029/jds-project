@@ -34,11 +34,11 @@ export const authenticateLogin = async (
 		});
 
 	const userDecoded = Buffer.from(user, "base64").toString().split(":");
-	const userId = userDecoded[0];
+	const email = userDecoded[0];
 	const password = userDecoded[1];
 
-	logger.info(`@middleware authenticateLogin. userId: ${userId}`);
-	req.user = { userId: userId, password: password };
+	logger.info(`@middleware authenticateLogin. userId: ${email}`);
+	req.user = { email, password };
 	next();
 };
 

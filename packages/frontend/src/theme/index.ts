@@ -181,19 +181,15 @@ export const theme = createTheme({
 		},
 		divider: "#E6E8F0",
 		primary: {
-			// main: "#5048E5",
-			// light: "#828DF8",
-			// dark: "#3832A0",
-			// contrastText: "#FFFFFF",
-			main: "#141414", // green: #15C39A, black: #141414
+			main: "#5048E5",
+			light: "#828DF8",
+			dark: "#3832A0",
 			contrastText: "#FFFFFF",
 		},
 		secondary: {
-			// main: "#10B981",
-			// light: "#3FC79A",
-			// dark: "#0B815A",
-			// contrastText: "#FFFFFF",
-			main: "#FFBC5E",
+			main: "#10B981",
+			light: "#3FC79A",
+			dark: "#0B815A",
 			contrastText: "#FFFFFF",
 		},
 		success: {
@@ -203,9 +199,9 @@ export const theme = createTheme({
 			contrastText: "#FFFFFF",
 		},
 		info: {
-			main: "#15C39A",
-			light: "#15C39A",
-			dark: "#15C39A",
+			main: "#8D8D8D",
+			light: "#A5A5A5",
+			dark: "#656565",
 			contrastText: "#FFFFFF",
 		},
 		warning: {
@@ -221,7 +217,7 @@ export const theme = createTheme({
 			contrastText: "#FFFFFF",
 		},
 		text: {
-			primary: "#121828",
+			primary: "#001E47",
 			secondary: "#65748B",
 			disabled: "rgba(55, 65, 81, 0.48)",
 		},

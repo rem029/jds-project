@@ -8,7 +8,12 @@
 ## Install
 
 ```sh
+
 yarn install
+yarn db-create
+yarn db-import
+knex migrate:latest
+
 ```
 
 ## Usage
@@ -63,6 +68,12 @@ API_TOKEN_SECRET=12345
 API_TOKEN_REFRESH=12345
 
 NODE_ENV=staging
+```
+
+### Database migration
+
+```
+yarn knex migrate:make <file_name> -x ts
 ```
 
 ## Author

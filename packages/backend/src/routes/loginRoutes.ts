@@ -9,8 +9,8 @@ const initializeRouter = (): Router => {
 	const router = Router();
 
 	router.post("/", authenticateLogin, (req: RequestAuthInterface, res: Response) => {
-		logger.info("@loginController");
-		const body = req.user ? req.user : { userId: "", password: "" };
+		logger.info("@loginRoute");
+		const body = req.user ? req.user : { email: "", password: "" };
 
 		loginController(body)
 			.then((response) => {

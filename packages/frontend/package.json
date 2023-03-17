@@ -19,7 +19,7 @@
 		"@types/react": "^18.0.5",
 		"@types/react-csv": "^1.1.2",
 		"@types/react-dom": "^18.0.0",
-		"@jds-project/common": "^1.1.0-alpha.9",
+		"@jds-project/common": "^0.0.1",
 		"axios": "^0.26.1",
 		"buffer": "^6.0.3",
 		"date-fns": "^2.28.0",

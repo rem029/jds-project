@@ -42,8 +42,8 @@ export const authenticateToken = (req: RequestAuthInterface, res: Response, next
 
 	try {
 		const decodedUser = decodeToken(token) as UserInfo;
-		logger.info(`@middleware authenticateToken decoded userId: ${decodedUser.Usr_Id}`);
-		req.user = { userId: decodedUser.Usr_Id };
+		logger.info(`@middleware authenticateToken decoded userId: ${decodedUser.email}`);
+		req.user = { email: decodedUser.email };
 	} catch (error) {
 		logger.error(`@middleware authenticateToken error: ${JSON.stringify(error)}`);
 		return handleServerError(res, req, 401, {

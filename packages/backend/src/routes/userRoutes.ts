@@ -9,10 +9,10 @@ const initializeRouter = (): Router => {
 	const router = express.Router();
 
 	router.get("/", authenticateToken, async (req: RequestAuthInterface, res: Response) => {
-		logger.info("@getUserInfoController");
-		const { userId } = req.user ? req.user : { userId: "" };
+		logger.info("@getUserInfoRoute");
+		const { email } = req.user ? req.user : { email: "" };
 
-		getUserInfoController({ userId })
+		getUserInfoController({ email })
 			.then((response) => {
 				handleServerResponse(res, req, 200, {
 					__typename: response.__typename,

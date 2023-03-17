@@ -50,7 +50,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: 'packages/backend/dist'
-          target: '/var/www/pm.rem029.com/'
+          target: '/var/www/jds.rem029.com/'
       - name: Reload server
         uses: appleboy/ssh-action@master
         with:
@@ -61,5 +61,5 @@ jobs:
           script: |
             whoami
             PATH=$PATH:/${{secrets.SSH_USER}}/.npm-global/bin
-            cd /var/www/pm.rem029.com/
+            cd /var/www/jds.rem029.com/
             pm2 reload ${{ secrets.PM2_APP_NAME }}

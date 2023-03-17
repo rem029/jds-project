@@ -5,4 +5,4 @@ echo "Build backend"
 yarn run build:backend
 
 echo "Reloading PM2 Application"
-pm2 reload pm-app-staging
+pm2 reload jds-app-staging

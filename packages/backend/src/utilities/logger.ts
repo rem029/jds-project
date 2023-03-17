@@ -1,6 +1,6 @@
 import winston from "winston";
 import fs from "fs";
-import { get } from "helpers/now";
+import { get } from "../helpers/now";
 import path from "path";
 const logDir = "__logs";
 

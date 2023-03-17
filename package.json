@@ -1,6 +1,6 @@
 {
   "name": "@jds-project/jds-project",
-  "description": "Project Management System",
+  "description": "Job Dispatch System",
   "private": true,
   "repository": "https://github.com/rem029/jds-project",
   "workspaces": {
@@ -13,7 +13,7 @@
     "bootstrap": "lerna bootstrap",
     "start": "lerna run start --parallel --scope @jds-project/*",
     "start:staging": "lerna run build:run --parallel --scope @jds-project/backend",
-    "start:pm2:staging": "pm2 start server.sh --interpreter=bash --name=pm-app-staging",
+    "start:pm2:staging": "pm2 start server.sh --interpreter=bash --name=jds-app-staging",
     "build": "lerna run build --parallel --scope @jds-project/*",
     "build:frontend": "lerna run build --scope @jds-project/frontend",
     "build:backend": "lerna run build --scope @jds-project/backend",
