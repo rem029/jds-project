@@ -1,0 +1,17 @@
+server {
+        root /var/www/jds.rem029.com/packages/frontend/build;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name jds.rem029.com;
+
+location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+}
+
+server {
+    server_name jds.rem029.com;
+    listen 81;
+
+}
