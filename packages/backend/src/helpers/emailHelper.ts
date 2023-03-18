@@ -23,7 +23,7 @@ export const sendMail = async (issueInfo: IssueInfo): Promise<void> => {
 				id: issueInfo.id,
 				title: issueInfo.title,
 				status: issueInfo.status,
-				assigned_user_email: issueInfo.assigned_user_email,
+				assigned_user_email: issueInfo.assigned_user_email ? issueInfo.assigned_user_email : "Unassigned",
 			}),
 		});
 	} catch (error) {

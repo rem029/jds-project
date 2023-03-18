@@ -143,43 +143,39 @@ export const Login = (): JSX.Element => {
 							</Button>
 						</Grid>
 
-						{process.env.NODE_ENV !== "production" && (
-							<>
-								<Grid
-									item
-									display="flex"
-									alignItems="center"
-									justifyContent="center"
-									flexDirection="column"
-									xs={12}
-								>
-									<Typography
-										variant="caption"
-										color="primary.main"
-										align="center"
-										fontSize={12}
-									>
-										Demo account
-									</Typography>
-									<Typography
-										variant="caption"
-										color="primary.main"
-										align="center"
-										fontSize={12}
-									>
-										User: test@email.com
-									</Typography>
-									<Typography
-										variant="caption"
-										color="primary.main"
-										align="center"
-										fontSize={12}
-									>
-										Password: 123
-									</Typography>
-								</Grid>
-							</>
-						)}
+						<Grid
+							item
+							display="flex"
+							alignItems="center"
+							justifyContent="center"
+							flexDirection="column"
+							xs={12}
+						>
+							<Typography
+								variant="caption"
+								color="primary.main"
+								align="center"
+								fontSize={12}
+							>
+								Demo account
+							</Typography>
+							<Typography
+								variant="caption"
+								color="primary.main"
+								align="center"
+								fontSize={12}
+							>
+								User: test@gmail.com
+							</Typography>
+							<Typography
+								variant="caption"
+								color="primary.main"
+								align="center"
+								fontSize={12}
+							>
+								Password: 123
+							</Typography>
+						</Grid>
 
 						<Grid item container alignItems="center" justifyContent="center" xs={12}>
 							<Typography

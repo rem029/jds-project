@@ -65,13 +65,17 @@ export const IssueFormEdit = ({
 				name: "Unassigned",
 			},
 		];
+
 		return usersData
 			? [
 					...usersData.map((user) => ({
 						id: user.id ? user.id.toString() : "-1",
 						name: user.email,
 					})),
-					...defaultItems,
+					{
+						id: "-1",
+						name: "Unassigned",
+					},
 			  ]
 			: [...defaultItems];
 	}, [usersData]);
@@ -83,6 +87,13 @@ export const IssueFormEdit = ({
 		value: AutoCompleteInputOptions | null
 	) => void = (name, value) => {
 		setFields((prevState) => ({ ...prevState, [name]: value?.id }));
+
+		if (name === "assigned_user_id")
+			setFields((prevState) => ({
+				...prevState,
+				assigned_user_email: menuAssignedUsers.find((user) => user.id === value?.id || -1)
+					?.name as string,
+			}));
 	};
 
 	return (
