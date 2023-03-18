@@ -182,7 +182,7 @@ export const IssueForm = ({
 						endIcon={
 							issuesLoading ? <CircularProgress color="info" size={24} /> : <Edit />
 						}
-						disabled={issuesLoading}
+						disabled={issuesLoading || fields?.status === "done"}
 					>
 						Edit
 					</Button>
