@@ -23,6 +23,7 @@
     "migrate-rollback": "lerna run migrate-rollback --scope @jds-project/backend"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "kill-port": "^1.6.1",
     "lerna": "^4.0.0",
     "lerna-changelog": "^2.2.0",
