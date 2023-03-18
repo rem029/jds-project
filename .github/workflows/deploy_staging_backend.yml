@@ -40,7 +40,7 @@ jobs:
           envkey_API_TOKEN_REFRESH: ${{ secrets.API_TOKEN_REFRESH }}
           envkey_API_MAIL_KEY: ${{secrets.API_MAIL_KEY}}
           envkey_API_MAIL_SENDER: ${{secrets.API_MAIL_SENDER}}
-          envkey_API_MAIL_DOMAIN: ${{secrets.API_MAIL_DOMAIN}}
+          envkey_API_MAIL_DOMAIN: ${{secrets.API_MAIL_SENDER}}
           envkey_NODE_ENV: 'staging'
           directory: 'packages/backend/'
           file_name: .env
@@ -75,7 +75,4 @@ jobs:
             whoami
             PATH=$PATH:/${{secrets.SSH_USER}}/.npm-global/bin
             cd /var/www/jds.rem029.com/
-            git pull origin main
-            yarn bootstrap
-            yarn migrate-latest
-            pm2 reload jds-app-staging
+            sh deploy.sh
