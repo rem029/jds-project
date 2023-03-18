@@ -78,5 +78,6 @@ jobs:
             whoami
             PATH=$PATH:/${{secrets.SSH_USER}}/.npm-global/bin
             cd /var/www/jds.rem029.com/
+            npm i -g yarn
             git pull origin main
             source deploy.sh
