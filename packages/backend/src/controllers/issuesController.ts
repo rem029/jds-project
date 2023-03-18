@@ -82,7 +82,7 @@ export const updateIssueController = async (
 		WHERE
 			id = ?;
         `,
-		[assignedUserId <= 0 ? null : assignedUserId, status.toLowerCase(), issueId]
+		[assignedUserId <= 0 || !assignedUserId ? null : assignedUserId, status.toLowerCase(), issueId]
 	);
 
 	return true;

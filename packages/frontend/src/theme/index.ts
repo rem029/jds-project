@@ -197,6 +197,7 @@ export const theme = createTheme({
 					minHeight: "100%",
 					width: "100%",
 					margin: "0",
+					backgroundColor: "white",
 				},
 				"#__next": {
 					display: "flex",

@@ -9,6 +9,7 @@ import {
 	Grid,
 	Typography,
 	CircularProgress,
+	Paper,
 } from "@mui/material";
 
 import { useAxios } from "../hooks/useAxios";
@@ -69,124 +70,134 @@ export const Login = (): JSX.Element => {
 				onSubmit={handleSubmit}
 				sx={{
 					bgcolor: "#fff",
-					minHeight: "90vh",
+					minHeight: "100vh",
 					display: "flex",
 					justifyContent: "center",
 					alignItems: "center",
 				}}
 			>
-				<Grid
-					container
-					alignItems="center"
-					justifyContent="center"
-					spacing={2}
-					direction="column"
+				<Paper
+					elevation={10}
+					sx={{
+						p: 3,
+						pt: 5,
+						pb: 5,
+						borderRadius: 3,
+					}}
 				>
-					<Grid item xs={12}>
-						<Box
-							component="img"
-							src={logo}
-							sx={{ width: "96px", height: "auto", m: "auto" }}
-							alignSelf="center"
-						/>
-					</Grid>
+					<Grid container spacing={2}>
+						<Grid item xs={12} display="flex" justifyContent="center">
+							<Box
+								component="img"
+								src={logo}
+								sx={{ width: "96px", height: "auto", m: "auto" }}
+								alignSelf="center"
+							/>
+						</Grid>
 
-					<Grid item xs={12}>
-						<Typography variant="h5" align="center" color="black !important">
-							Job Dispatch System
-						</Typography>
-					</Grid>
+						<Grid item xs={12}>
+							<Typography variant="h5" align="center" color="primary">
+								Job Dispatch System
+							</Typography>
+						</Grid>
 
-					<Grid item xs={12}>
-						<Typography variant="h6" align="center">
-							Login Page
-						</Typography>
-					</Grid>
+						<Grid item xs={12}>
+							<Typography variant="h6" align="center">
+								Login Page
+							</Typography>
+						</Grid>
 
-					<Grid item container alignItems="center" justifyContent="center" xs={12}>
-						<TextField
-							required
-							fullWidth
-							label="Email"
-							name="username"
-							type="text"
-							value={fields.username}
-							onChange={handlChange}
-						/>
-					</Grid>
+						<Grid item alignItems="center" justifyContent="center" xs={12}>
+							<TextField
+								required
+								fullWidth
+								label="Email"
+								name="username"
+								type="text"
+								value={fields.username}
+								onChange={handlChange}
+							/>
+						</Grid>
 
-					<Grid item container alignItems="center" justifyContent="center" xs={12}>
-						<TextField
-							required
-							fullWidth
-							label="Password"
-							type="password"
-							name="password"
-							value={fields.password}
-							onChange={handlChange}
-						/>
-					</Grid>
+						<Grid item alignItems="center" justifyContent="center" xs={12}>
+							<TextField
+								required
+								fullWidth
+								label="Password"
+								type="password"
+								name="password"
+								value={fields.password}
+								onChange={handlChange}
+							/>
+						</Grid>
 
-					<Grid item container alignItems="center" justifyContent="center" xs={12}>
-						<Button
-							size="large"
-							variant="contained"
-							fullWidth
-							type="submit"
-							disabled={loading}
-						>
-							{loading ? <CircularProgress size={36} /> : "Login"}
-						</Button>
+						<Grid item alignItems="center" justifyContent="center" xs={12}>
+							<Button
+								size="large"
+								variant="contained"
+								fullWidth
+								type="submit"
+								disabled={loading}
+							>
+								{loading ? <CircularProgress size={36} /> : "Login"}
+							</Button>
+						</Grid>
+
+						{process.env.NODE_ENV !== "production" && (
+							<>
+								<Grid
+									item
+									display="flex"
+									alignItems="center"
+									justifyContent="center"
+									flexDirection="column"
+									xs={12}
+								>
+									<Typography
+										variant="caption"
+										color="primary.main"
+										align="center"
+										fontSize={12}
+									>
+										Demo account
+									</Typography>
+									<Typography
+										variant="caption"
+										color="primary.main"
+										align="center"
+										fontSize={12}
+									>
+										User: test@email.com
+									</Typography>
+									<Typography
+										variant="caption"
+										color="primary.main"
+										align="center"
+										fontSize={12}
+									>
+										Password: 123
+									</Typography>
+								</Grid>
+							</>
+						)}
+
+						<Grid item container alignItems="center" justifyContent="center" xs={12}>
+							<Typography
+								variant="caption"
+								color={success ? "blue" : "red"}
+								align="center"
+								fontSize={12}
+							>
+								{message}
+							</Typography>
+						</Grid>
+						<Grid item container alignItems="center" justifyContent="center" xs={12}>
+							<Typography variant="caption" color="red" align="center" fontSize={16}>
+								{helpText}
+							</Typography>
+						</Grid>
 					</Grid>
-					<Grid
-						item
-						container
-						alignItems="center"
-						justifyContent="center"
-						flexDirection="column"
-						xs={12}
-					>
-						<Typography
-							variant="caption"
-							color="primary.main"
-							align="center"
-							fontSize={12}
-						>
-							Demo account
-						</Typography>
-						<Typography
-							variant="caption"
-							color="primary.main"
-							align="center"
-							fontSize={12}
-						>
-							User: test@email.com
-						</Typography>
-						<Typography
-							variant="caption"
-							color="primary.main"
-							align="center"
-							fontSize={12}
-						>
-							Password: 123
-						</Typography>
-					</Grid>
-					<Grid item container alignItems="center" justifyContent="center" xs={12}>
-						<Typography
-							variant="caption"
-							color={success ? "blue" : "red"}
-							align="center"
-							fontSize={12}
-						>
-							{message}
-						</Typography>
-					</Grid>
-					<Grid item container alignItems="center" justifyContent="center" xs={12}>
-						<Typography variant="caption" color="red" align="center" fontSize={16}>
-							{helpText}
-						</Typography>
-					</Grid>
-				</Grid>
+				</Paper>
 			</Box>
 		</Container>
 	);
