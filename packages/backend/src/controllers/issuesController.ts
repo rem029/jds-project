@@ -1,6 +1,7 @@
 import { knexPostgres } from "services/database";
 import { logger } from "../utilities/logger";
 import { IssueInfo } from "@jds-project/common";
+import { sendMail } from "../helpers/emailHelper";
 
 export const getIssuesController = async (): Promise<IssueInfo[]> => {
 	logger.info("@getIssuesController");
@@ -64,12 +65,11 @@ export const getIssueController = async (id: number): Promise<IssueInfo> => {
 	return response;
 };
 
-export const updateIssueController = async (
-	issueId: number,
-	assignedUserId: number,
-	status: string
-): Promise<boolean> => {
-	logger.info("@updateIssueController " + assignedUserId);
+export const updateIssueController = async (issue: IssueInfo): Promise<boolean> => {
+	logger.info("@updateIssueController " + issue.assigned_user_id);
+
+	const { status, id, assigned_user_id } = issue;
+	const assignedUserId = Number(assigned_user_id) <= 0 || !assigned_user_id ? null : assigned_user_id;
 
 	await knexPostgres.raw(
 		`
@@ -82,8 +82,9 @@ export const updateIssueController = async (
 		WHERE
 			id = ?;
         `,
-		[assignedUserId <= 0 || !assignedUserId ? null : assignedUserId, status.toLowerCase(), issueId]
+		[assignedUserId, status.toLowerCase(), id]
 	);
 
+	await sendMail(issue);
 	return true;
 };

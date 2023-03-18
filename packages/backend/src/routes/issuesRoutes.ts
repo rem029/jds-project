@@ -61,12 +61,12 @@ const initializeRouter = (): Router => {
 			req.body.updateIssueController ? req.body.updateIssueController : JSON.parse(req.headers["data"] as string)
 		) as IssueInfo;
 
-		updateIssueController(req.params.id as unknown as number, Number(fields.assigned_user_id), fields.status)
+		updateIssueController({ ...fields, id: Number(req.params.id) })
 			.then((response) => {
 				handleServerResponse(res, req, 200, {
 					__typename: "boolean",
 					success: true,
-					message: "Update issue success",
+					message: "Update issue success. Notification has been sent.",
 					data: response,
 				});
 			})
