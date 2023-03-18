@@ -38,6 +38,7 @@ jobs:
           envkey_PORT: 1368
           envkey_API_TOKEN_SECRET: ${{ secrets.API_TOKEN_SECRET }}
           envkey_API_TOKEN_REFRESH: ${{ secrets.API_TOKEN_REFRESH }}
+          envkey_NODE_ENV: 'staging'
           directory: 'packages/backend/'
           file_name: .env
           fail_on_empty: false
