@@ -90,22 +90,17 @@ export const updateIssueController = async (issue: IssueInfo): Promise<boolean> 
 };
 
 export const addIssueController = async (issue: IssueInfo): Promise<boolean> => {
-	logger.info("@addIssueController " + issue.assigned_user_id);
+	logger.info("@addIssueController");
 
-	const { status, id, assigned_user_id } = issue;
+	const { title, description, status } = issue;
 
 	await knexPostgres.raw(
 		`
-		UPDATE
-			common.issues
-		SET
-			assigned_user_id = ?,
-			status = ?,
-			updated_at = current_timestamp
-		WHERE
-			id = ?;
+		INSERT INTO common.issues(
+			title, description, status, created_at, updated_at)
+		VALUES (?, ?, ?, current_timestamp, current_timestamp);
         `,
-		[assignedUserId, status.toLowerCase(), id]
+		[title, description, status]
 	);
 
 	return true;

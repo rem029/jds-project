@@ -87,7 +87,7 @@ export const IssueForm = ({
 		console.log("@handleFormSubmitClick", fields);
 
 		updateIssuePost({
-			method: "POST",
+			method: "PATCH",
 			headers: {
 				Authorization: `Token ${getToken()}`,
 				Accept: "application/json",

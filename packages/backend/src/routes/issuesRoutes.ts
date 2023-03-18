@@ -4,7 +4,12 @@ import { RequestAuthInterface, RequestWithMetrics } from "../types";
 import { logger } from "../utilities/logger";
 
 import { authenticateToken } from "../middlewares/authToken";
-import { getIssueController, getIssuesController, updateIssueController } from "../controllers/issuesController";
+import {
+	addIssueController,
+	getIssueController,
+	getIssuesController,
+	updateIssueController,
+} from "../controllers/issuesController";
 import { IssueInfo } from "@jds-project/common";
 
 const initializeRouter = (): Router => {
@@ -54,7 +59,7 @@ const initializeRouter = (): Router => {
 			});
 	});
 
-	router.post("/:id", authenticateToken, async (req: RequestAuthInterface, res: Response) => {
+	router.patch("/:id", authenticateToken, async (req: RequestAuthInterface, res: Response) => {
 		logger.info("@updateIssuesRoute");
 
 		const fields = (
@@ -75,6 +80,32 @@ const initializeRouter = (): Router => {
 				handleServerError(res, req, 500, {
 					success: false,
 					message: "Update issue error",
+					errorMessage: (error as Error).message,
+				});
+			});
+	});
+
+	router.post("/", authenticateToken, async (req: RequestAuthInterface, res: Response) => {
+		logger.info("@addIssueController");
+
+		const fields = (
+			req.body.addIssueController ? req.body.addIssueController : JSON.parse(req.headers["data"] as string)
+		) as IssueInfo;
+
+		addIssueController(fields)
+			.then((response) => {
+				handleServerResponse(res, req, 200, {
+					__typename: "boolean",
+					success: true,
+					message: "Add issue success.",
+					data: response,
+				});
+			})
+			.catch((error) => {
+				logger.error(`@addIssueController.Error ${error.message}`);
+				handleServerError(res, req, 500, {
+					success: false,
+					message: "Add issue error",
 					errorMessage: (error as Error).message,
 				});
 			});
