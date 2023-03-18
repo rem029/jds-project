@@ -2,18 +2,20 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
+require("dotenv").config({ path: __dirname + "/" + ".env" });
 const fetch = require("node-fetch");
 const { faker } = require("@faker-js/faker");
 
-const DEMO_USER_NAME = "test@gmail.com";
-const DEMO_USER_PW = "123";
+const DEMO_USER_NAME = process.env.DEMO_USER_NAME;
+const DEMO_USER_PW = process.env.DEMO_USER_PW;
+const DEMO_URL = process.env.DEMO_URL;
 
 const login = async (username, password) => {
   const authHeader = `Basic ${Buffer.from(username + ":" + password).toString(
     "base64"
   )}`;
 
-  const response = await fetch("http://localhost:6060/login", {
+  const response = await fetch(DEMO_URL + "/login", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -30,7 +32,7 @@ const login = async (username, password) => {
 const addIssue = async (token, title, description, status) => {
   const authToken = `Token ${token}`;
 
-  const response = await fetch("http://localhost:6060/issues/", {
+  const response = await fetch(DEMO_URL + "/issues", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -51,6 +53,10 @@ const addIssue = async (token, title, description, status) => {
 
 const init = async () => {
   try {
+    console.log("Loading env from", __dirname + "/" + ".env");
+    console.log("Adding issue for", DEMO_URL);
+    console.log("Using creds of", DEMO_USER_NAME, DEMO_USER_PW);
+
     const token = await login(DEMO_USER_NAME, DEMO_USER_PW);
     const success = await addIssue(
       token,
