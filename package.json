@@ -21,7 +21,7 @@
     "publish:version": "lerna version --conventional-commits",
     "migrate-latest": "lerna run migrate-latest --scope @jds-project/backend",
     "migrate-rollback": "lerna run migrate-rollback --scope @jds-project/backend",
-    "cron-add-issue": "pm2 start ./cron/addIssue.js --cron \"*/15 * * * *\" --name=jds-add-issue-every-15min",
+    "cron-add-issue": "pm2 start ./cron/addIssue.js --cron \"*/15 * * * *\" --name=jds-add-issue-every-15min --no-autorestart",
     "add-issue": "node ./cron/addIssue.js"
   },
   "devDependencies": {
