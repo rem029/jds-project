@@ -1,0 +1,7 @@
+$ORIGIN api.jds.rem029.com.
+$TTL 1800
+api.jds.rem029.com. IN SOA ns1.digitalocean.com. hostmaster.api.jds.rem029.com. 1655893693 10800 3600 604800 1800
+api.jds.rem029.com. 3600 IN A 157.230.35.35
+api.jds.rem029.com. 1800 IN NS ns1.digitalocean.com.
+api.jds.rem029.com. 1800 IN NS ns2.digitalocean.com.
+api.jds.rem029.com. 1800 IN NS ns3.digitalocean.com.
