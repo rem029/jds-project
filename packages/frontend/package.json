@@ -1,11 +1,12 @@
 {
 	"name": "@jds-project/frontend",
 	"description": "Frontend for wakra project",
-	"version": "0.0.1",
+	"version": "1.1.0-alpha.11",
 	"private": true,
 	"dependencies": {
 		"@emotion/react": "^11.9.0",
 		"@emotion/styled": "^11.8.1",
+		"@jds-project/common": "^1.1.0-alpha.11",
 		"@mui/icons-material": "^5.6.1",
 		"@mui/lab": "^5.0.0-alpha.75",
 		"@mui/material": "^5.6.1",
@@ -19,7 +20,6 @@
 		"@types/react": "^18.0.5",
 		"@types/react-csv": "^1.1.2",
 		"@types/react-dom": "^18.0.0",
-		"@jds-project/common": "^0.0.1",
 		"axios": "^0.26.1",
 		"buffer": "^6.0.3",
 		"date-fns": "^2.28.0",
