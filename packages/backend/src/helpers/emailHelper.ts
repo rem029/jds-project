@@ -5,16 +5,20 @@ import Mailgun from "mailgun.js";
 export const sendMail = async (issueInfo: IssueInfo): Promise<void> => {
 	try {
 		const recipient = "jds.project.info@gmail.com";
-		const sender = process.env.API_MAIL_SENDER || "";
+		const sender = process.env.API_MAIL_SENDER?.trim() || "";
+
+		console.log("process.env.API_MAIL_SENDER", process.env.API_MAIL_SENDER);
+		console.log("process.env.API_MAIL_KEY", process.env.API_MAIL_KEY);
+		console.log("process.env.API_MAIL_DOMAIN", process.env.API_MAIL_DOMAIN);
 
 		const mailgun = new Mailgun(formData);
 
 		const mg = mailgun.client({
 			username: "api",
-			key: process.env.API_MAIL_KEY || "",
+			key: process.env.API_MAIL_KEY?.trim() || "",
 		});
 
-		await mg.messages.create(process.env.API_MAIL_DOMAIN || "", {
+		await mg.messages.create(process.env.API_MAIL_DOMAIN?.trim() || "", {
 			from: sender,
 			to: [recipient],
 			template: "jds-issue-update",
