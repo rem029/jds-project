@@ -88,3 +88,25 @@ export const updateIssueController = async (issue: IssueInfo): Promise<boolean> 
 	await sendMail(issue);
 	return true;
 };
+
+export const addIssueController = async (issue: IssueInfo): Promise<boolean> => {
+	logger.info("@addIssueController " + issue.assigned_user_id);
+
+	const { status, id, assigned_user_id } = issue;
+
+	await knexPostgres.raw(
+		`
+		UPDATE
+			common.issues
+		SET
+			assigned_user_id = ?,
+			status = ?,
+			updated_at = current_timestamp
+		WHERE
+			id = ?;
+        `,
+		[assignedUserId, status.toLowerCase(), id]
+	);
+
+	return true;
+};
