@@ -1,5 +1,92 @@
 import { createTheme } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import { Shadows } from "@mui/material/styles/shadows";
+import type {} from "@mui/x-data-grid/themeAugmentation";
+
+export const themePalette = {
+	action: {
+		active: "#C1BEF9",
+		focus: "rgba(55, 65, 81, 0.12)",
+		hover: "#EFEEFF",
+		selected: "#EFEEFF",
+		disabledBackground: "rgba(55, 65, 81, 0.12)",
+		disabled: "rgba(55, 65, 81, 0.26)",
+	},
+	background: {
+		default: "#FBFBFB",
+		paper: "#FFFFFF",
+	},
+	divider: "#E6E8F0",
+	primary: {
+		main: "#5048E5",
+		light: "#8782EE",
+		dark: "#3832A0",
+		contrastText: "#FFFFFF",
+	},
+	secondary: {
+		main: "#10B981",
+		light: "#3FC79A",
+		dark: "#0B815A",
+		contrastText: "#FFFFFF",
+	},
+	success: {
+		main: "#14B8A6",
+		light: "#43C6B7",
+		dark: "#0E8074",
+		contrastText: "#FFFFFF",
+	},
+	info: {
+		main: "#8D8D8D",
+		light: "#CBCBCB",
+		dark: "#656565",
+		contrastText: "#FFFFFF",
+	},
+	warning: {
+		main: "#FFB020",
+		light: "#FFBF4C",
+		dark: "#B27B16",
+		contrastText: "#FFFFFF",
+	},
+	error: {
+		main: "#D14343",
+		light: "#DA6868",
+		dark: "#922E2E",
+		contrastText: "#FFFFFF",
+	},
+	text: {
+		primary: "#001E47",
+		secondary: "#65748B",
+		disabled: "rgba(55, 65, 81, 0.48)",
+	},
+};
+
+export const themeShadows: Shadows = [
+	"none",
+	"0px 1px 1px rgba(100, 116, 139, 0.06), 0px 1px 2px rgba(100, 116, 139, 0.1)",
+	"0px 1px 2px rgba(100, 116, 139, 0.12)",
+	"0px 1px 4px rgba(100, 116, 139, 0.12)",
+	"0px 1px 5px rgba(100, 116, 139, 0.12)",
+	"0px 1px 6px rgba(100, 116, 139, 0.12)",
+	"0px 2px 6px rgba(100, 116, 139, 0.12)",
+	"0px 3px 6px rgba(100, 116, 139, 0.12)",
+	"0px 2px 4px rgba(31, 41, 55, 0.06), 0px 4px 6px rgba(100, 116, 139, 0.12)",
+	"0px 5px 12px rgba(100, 116, 139, 0.12)",
+	"0px 5px 14px rgba(100, 116, 139, 0.12)",
+	"0px 5px 15px rgba(100, 116, 139, 0.12)",
+	"0px 6px 15px rgba(100, 116, 139, 0.12)",
+	"0px 7px 15px rgba(100, 116, 139, 0.12)",
+	"0px 8px 15px rgba(100, 116, 139, 0.12)",
+	"0px 9px 15px rgba(100, 116, 139, 0.12)",
+	"0px 10px 15px rgba(100, 116, 139, 0.12)",
+	"0px 12px 22px -8px rgba(100, 116, 139, 0.25)",
+	"0px 13px 22px -8px rgba(100, 116, 139, 0.25)",
+	"0px 14px 24px -8px rgba(100, 116, 139, 0.25)",
+	"0px 10px 10px rgba(31, 41, 55, 0.04), 0px 20px 25px rgba(31, 41, 55, 0.1)",
+	"0px 25px 50px rgba(100, 116, 139, 0.25)",
+	"0px 25px 50px rgba(100, 116, 139, 0.25)",
+	"0px 25px 50px rgba(100, 116, 139, 0.25)",
+	"0px 25px 50px rgba(100, 116, 139, 0.25)",
+];
 
 export const theme = createTheme({
 	breakpoints: {
@@ -131,13 +218,13 @@ export const theme = createTheme({
 		MuiTableHead: {
 			styleOverrides: {
 				root: {
-					backgroundColor: "#F3F4F6",
+					backgroundColor: themePalette.primary.main,
 					".MuiTableCell-root": {
-						color: "#374151",
+						color: themePalette.primary.main,
 					},
 					"& .MuiTableCell-root": {
 						borderBottom: "2px solid",
-						borderColor: grey[200],
+						borderColor: themePalette.primary.main,
 						fontSize: "12px",
 						fontWeight: 600,
 						lineHeight: 1,
@@ -152,106 +239,38 @@ export const theme = createTheme({
 			},
 		},
 		MuiTableCell: {
-			styleOverrides: { root: { borderBottom: "1px solid", borderColor: grey[100] } },
+			styleOverrides: {
+				root: {
+					borderBottom: "2px solid",
+					borderColor: themePalette.primary.main,
+				},
+			},
+		},
+		MuiDataGrid: {
+			styleOverrides: {
+				root: {
+					backgroundColor: themePalette.background.paper,
+				},
+				columnHeader: {
+					backgroundColor: themePalette.primary.main,
+					color: themePalette.primary.contrastText,
+					boxShadow: themeShadows[10] + " !important",
+				},
+				row: {
+					backgroundColor: themePalette.background.default,
+					color: themePalette.text.primary,
+				},
+				cell: {
+					borderColor: themePalette.divider,
+				},
+			},
 		},
 	},
-	palette: {
-		// neutral: {
-		//   100: '#F3F4F6',
-		//   200: '#E5E7EB',
-		//   300: '#D1D5DB',
-		//   400: '#9CA3AF',
-		//   500: '#6B7280',
-		//   600: '#4B5563',
-		//   700: '#374151',
-		//   800: '#1F2937',
-		//   900: '#111827',
-		// },
-		action: {
-			active: "#6B7280",
-			focus: "rgba(55, 65, 81, 0.12)",
-			hover: "rgba(55, 65, 81, 0.04)",
-			selected: "rgba(55, 65, 81, 0.08)",
-			disabledBackground: "rgba(55, 65, 81, 0.12)",
-			disabled: "rgba(55, 65, 81, 0.26)",
-		},
-		background: {
-			default: "#FBFBFB",
-			paper: "#FFFFFF",
-		},
-		divider: "#E6E8F0",
-		primary: {
-			main: "#5048E5",
-			light: "#828DF8",
-			dark: "#3832A0",
-			contrastText: "#FFFFFF",
-		},
-		secondary: {
-			main: "#10B981",
-			light: "#3FC79A",
-			dark: "#0B815A",
-			contrastText: "#FFFFFF",
-		},
-		success: {
-			main: "#14B8A6",
-			light: "#43C6B7",
-			dark: "#0E8074",
-			contrastText: "#FFFFFF",
-		},
-		info: {
-			main: "#8D8D8D",
-			light: "#A5A5A5",
-			dark: "#656565",
-			contrastText: "#FFFFFF",
-		},
-		warning: {
-			main: "#FFB020",
-			light: "#FFBF4C",
-			dark: "#B27B16",
-			contrastText: "#FFFFFF",
-		},
-		error: {
-			main: "#D14343",
-			light: "#DA6868",
-			dark: "#922E2E",
-			contrastText: "#FFFFFF",
-		},
-		text: {
-			primary: "#001E47",
-			secondary: "#65748B",
-			disabled: "rgba(55, 65, 81, 0.48)",
-		},
-	},
+	palette: themePalette,
 	shape: {
 		borderRadius: 8,
 	},
-	shadows: [
-		"none",
-		"0px 1px 1px rgba(100, 116, 139, 0.06), 0px 1px 2px rgba(100, 116, 139, 0.1)",
-		"0px 1px 2px rgba(100, 116, 139, 0.12)",
-		"0px 1px 4px rgba(100, 116, 139, 0.12)",
-		"0px 1px 5px rgba(100, 116, 139, 0.12)",
-		"0px 1px 6px rgba(100, 116, 139, 0.12)",
-		"0px 2px 6px rgba(100, 116, 139, 0.12)",
-		"0px 3px 6px rgba(100, 116, 139, 0.12)",
-		"0px 2px 4px rgba(31, 41, 55, 0.06), 0px 4px 6px rgba(100, 116, 139, 0.12)",
-		"0px 5px 12px rgba(100, 116, 139, 0.12)",
-		"0px 5px 14px rgba(100, 116, 139, 0.12)",
-		"0px 5px 15px rgba(100, 116, 139, 0.12)",
-		"0px 6px 15px rgba(100, 116, 139, 0.12)",
-		"0px 7px 15px rgba(100, 116, 139, 0.12)",
-		"0px 8px 15px rgba(100, 116, 139, 0.12)",
-		"0px 9px 15px rgba(100, 116, 139, 0.12)",
-		"0px 10px 15px rgba(100, 116, 139, 0.12)",
-		"0px 12px 22px -8px rgba(100, 116, 139, 0.25)",
-		"0px 13px 22px -8px rgba(100, 116, 139, 0.25)",
-		"0px 14px 24px -8px rgba(100, 116, 139, 0.25)",
-		"0px 10px 10px rgba(31, 41, 55, 0.04), 0px 20px 25px rgba(31, 41, 55, 0.1)",
-		"0px 25px 50px rgba(100, 116, 139, 0.25)",
-		"0px 25px 50px rgba(100, 116, 139, 0.25)",
-		"0px 25px 50px rgba(100, 116, 139, 0.25)",
-		"0px 25px 50px rgba(100, 116, 139, 0.25)",
-	],
+	shadows: themeShadows,
 	typography: {
 		button: {
 			fontWeight: 600,

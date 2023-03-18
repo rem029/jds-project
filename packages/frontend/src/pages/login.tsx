@@ -14,7 +14,8 @@ import {
 import { useAxios } from "../hooks/useAxios";
 import { Token } from "@jds-project/common";
 import { saveToken } from "utils/storage";
-import { APP_NAME, URL_LOGIN } from "utils/constants";
+import { URL_LOGIN } from "utils/constants";
+import logo from "../assets/jds-logo.png";
 
 // ADD SHOW PASSWORD TO TEXT
 export const Login = (): JSX.Element => {
@@ -82,25 +83,17 @@ export const Login = (): JSX.Element => {
 					direction="column"
 				>
 					<Grid item xs={12}>
-						{/* <Box
+						<Box
 							component="img"
 							src={logo}
-							sx={{ width: "100%", height: "auto", m: "auto" }}
+							sx={{ width: "96px", height: "auto", m: "auto" }}
 							alignSelf="center"
-						/> */}
-						<Typography
-							variant="h1"
-							align="center"
-							color="primary.main"
-							letterSpacing={4}
-						>
-							{APP_NAME}
-						</Typography>
+						/>
 					</Grid>
 
 					<Grid item xs={12}>
 						<Typography variant="h5" align="center" color="black !important">
-							Project Management System
+							Job Dispatch System
 						</Typography>
 					</Grid>
 
@@ -114,7 +107,7 @@ export const Login = (): JSX.Element => {
 						<TextField
 							required
 							fullWidth
-							label="Username"
+							label="Email"
 							name="username"
 							type="text"
 							value={fields.username}
@@ -167,7 +160,7 @@ export const Login = (): JSX.Element => {
 							align="center"
 							fontSize={12}
 						>
-							User: sahar
+							User: test@email.com
 						</Typography>
 						<Typography
 							variant="caption"
@@ -175,7 +168,7 @@ export const Login = (): JSX.Element => {
 							align="center"
 							fontSize={12}
 						>
-							Password: 789
+							Password: 123
 						</Typography>
 					</Grid>
 					<Grid item container alignItems="center" justifyContent="center" xs={12}>

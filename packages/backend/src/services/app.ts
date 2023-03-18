@@ -2,7 +2,8 @@ import express, { Express } from "express";
 import cors from "cors";
 
 import { loginRoute } from "routes/loginRoutes";
-import { userRoutes } from "routes/userRoutes";
+import { userRoutes } from "routes/usersRoutes";
+import { issuesRoutes } from "routes/issuesRoutes";
 import { RequestWithMetrics } from "types";
 import { elapsedTime } from "helpers/now";
 
@@ -24,7 +25,8 @@ const initializeAppExpress = (): Express => {
 	});
 
 	app.use("/login", loginRoute);
-	app.use("/user", userRoutes);
+	app.use("/users", userRoutes);
+	app.use("/issues", issuesRoutes);
 	const startDate = new Date();
 	//Default routes
 	app.get("/test", async (_, res) => {

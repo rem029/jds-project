@@ -11,7 +11,8 @@ export interface AutoCompleteInputProps {
 	name?: string;
 	label?: string;
 	loading?: boolean;
-
+	disabled?: boolean;
+	required?: boolean;
 	// eslint-disable-next-line no-unused-vars
 	handleChange?: (name: string, value: AutoCompleteInputOptions | null) => void;
 }
@@ -22,6 +23,8 @@ export const AutoCompleteInput = ({
 	name,
 	label,
 	loading,
+	disabled = false,
+	required = false,
 	handleChange,
 }: AutoCompleteInputProps): JSX.Element => {
 	return (
@@ -35,12 +38,14 @@ export const AutoCompleteInput = ({
 			onChange={(_, value) => {
 				handleChange && handleChange(name || _.currentTarget.nodeName, value);
 			}}
+			disabled={disabled}
 			renderInput={(params) => (
 				<TextField
 					{...params}
 					name={name || ""}
 					label={label || ""}
 					fullWidth
+					required={required}
 					InputProps={{
 						...params.InputProps,
 						endAdornment: (

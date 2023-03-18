@@ -43,10 +43,20 @@ export const dateHelperFormatProper = (date: Date): string => {
 			? date.getDate().toString()
 			: `0${date.getDate()}`;
 
-	console.log("date.getMonth()", date.getMonth());
-	console.log("date.getDay()", date.getDay());
-
 	const month = monthNames[date.getMonth()];
 
 	return `${day}-${month}-${date.getFullYear()}, ${dayNames[date.getDay()]}`;
+};
+
+export const dateFormatNative = (dateToFormat: Date, timezone: string): string => {
+	return dateToFormat.toLocaleString("en-us", {
+		day: "2-digit",
+		month: "long",
+		year: "numeric",
+		hour: "2-digit",
+		minute: "2-digit",
+		timeZone: timezone,
+		timeZoneName: "short",
+		hour12: false,
+	});
 };

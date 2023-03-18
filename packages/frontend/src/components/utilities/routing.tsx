@@ -1,15 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Dashboard, ProtectedRoute, Login } from "components";
-import { Main } from "pages/main";
+import { ProtectedRoute } from "components";
+import { PageContainer } from "pages/container";
 import { NotFound } from "pages/notFound";
 import { StoreProvider } from "store";
-import { useEffect } from "react";
+import { Issues } from "pages/issues";
+import { Login } from "pages/login";
+import { Dashboard } from "pages/dashboard";
+// import { Users } from "pages/users";
 
 export const Routing = (): JSX.Element => {
-	useEffect(() => {
-		console.log("Routing rendered");
-	}, []);
-
 	return (
 		<BrowserRouter>
 			<StoreProvider maxNotification={3}>
@@ -19,12 +18,17 @@ export const Routing = (): JSX.Element => {
 						path="/"
 						element={
 							<ProtectedRoute>
-								<Main />
+								<PageContainer />
 							</ProtectedRoute>
 						}
 					>
 						<Route path="/" element={<Dashboard />} />
 						<Route path={"dashboard"} element={<Dashboard />} />
+
+						<Route path={"issues/:id"} element={<Issues />} />
+						<Route path={"issues"} element={<Issues />} />
+
+						{/* <Route path={"users"} element={<Users />} /> */}
 					</Route>
 
 					<Route path="*" element={<NotFound />} />

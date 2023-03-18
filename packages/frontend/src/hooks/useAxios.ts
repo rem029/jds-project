@@ -8,6 +8,13 @@ export interface AxiosRequestCustomConfig extends AxiosRequestConfig {
 	dontLogoutOnAuthError?: boolean;
 }
 
+export interface FetchResponse<T> {
+	data: T | undefined;
+	message: string;
+	error: AxiosError | undefined;
+	success: boolean;
+}
+
 export const useAxios = <T>(
 	url: string,
 	config?: AxiosRequestCustomConfig
@@ -19,7 +26,7 @@ export const useAxios = <T>(
 	loading: boolean;
 	config: AxiosRequestCustomConfig | undefined;
 	// eslint-disable-next-line no-unused-vars
-	fetch: (config?: AxiosRequestCustomConfig) => void;
+	fetch: (config?: AxiosRequestCustomConfig) => Promise<FetchResponse<T>>;
 	fetchCancel: () => void;
 } => {
 	const [loading, setLoading] = useState(false);
@@ -54,7 +61,9 @@ export const useAxios = <T>(
 		if (axiosController) axiosController.abort();
 	};
 
-	const fetch = (config?: AxiosRequestCustomConfig): void => {
+	const fetch = async <T>(
+		config?: AxiosRequestCustomConfig
+	): Promise<FetchResponse<T>> => {
 		const controller = new AbortController();
 		const configMerged = {
 			...axiosConfig,
@@ -63,40 +72,58 @@ export const useAxios = <T>(
 		} as AxiosRequestCustomConfig;
 		setAxiosController(controller);
 		const request = axios.create(configMerged);
-		console.log("@configMerged", configMerged);
-		resetState();
-		setLoading(true);
 
-		request(url)
-			.then((response) => {
-				setLoading(false);
-				setData(response.data.data ? response.data.data : response.data);
-				setMessage(response.data.message ? response.data.message : response.statusText);
-				setSuccess(true);
-			})
-			.catch((error: AxiosError) => {
-				if (error) {
-					enqueueSnackbar(error.response?.data.message || error.message, {
-						variant: "error",
-						autoHideDuration: NOTISTACK_AUTO_HIDE_MS,
-					});
+		try {
+			resetState();
+			setLoading(true);
 
-					if (error.response?.status === 401 || error.response?.status === 403) {
-						if (!configMerged.dontLogoutOnAuthError) {
-							logout();
-						}
-						resetState();
-						return;
+			const response = await request(url);
+			setLoading(false);
+			setData(response.data.data ? response.data.data : response.data);
+			setMessage(response.data.message ? response.data.message : response.statusText);
+			setSuccess(true);
+
+			return {
+				data: response.data.data ? response.data.data : response.data,
+				message: response.data.message ? response.data.message : response.statusText,
+				error: undefined,
+				success: true,
+			};
+		} catch (error) {
+			const axiosError: AxiosError = error as AxiosError;
+
+			if (axiosError) {
+				enqueueSnackbar(axiosError.response?.data.message || axiosError.message, {
+					variant: "error",
+					autoHideDuration: NOTISTACK_AUTO_HIDE_MS,
+				});
+
+				if (axiosError.response?.status === 401 || axiosError.response?.status === 403) {
+					if (!configMerged.dontLogoutOnAuthError) {
+						logout();
 					}
-					setData(error.response?.data?.data || undefined);
-					setSuccess(false);
-					setMessage(error.response?.data.message || error.message);
-					setError(error);
-					setLoading(false);
+					resetState();
 				}
-			});
+				setData(axiosError.response?.data?.data || undefined);
+				setSuccess(false);
+				setMessage(axiosError.response?.data.message || axiosError.message);
+				setError(axiosError);
+				setLoading(false);
 
-		return;
+				return {
+					data: undefined,
+					message: axiosError.response?.data.message || axiosError.message,
+					error: axiosError,
+					success: false,
+				};
+			}
+		}
+		return {
+			data: data as T | undefined,
+			message: message,
+			error: error as AxiosError,
+			success: success,
+		};
 	};
 
 	return {

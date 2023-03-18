@@ -36,6 +36,7 @@ export const DrawerCollapsibleList = ({
 	return (
 		<>
 			<ListItem
+				sx={{ pt: 2, pb: 2 }}
 				button
 				key={linkText}
 				disabled={disabled}
@@ -46,9 +47,21 @@ export const DrawerCollapsibleList = ({
 				}
 			>
 				<ListItemIcon>{linkTextIcon}</ListItemIcon>
-				<ListItemText primary={<Typography variant="body1">{linkText}</Typography>} />
+				<ListItemText
+					primary={
+						<Typography color="primary.main" variant="body1">
+							{linkText}
+						</Typography>
+					}
+				/>
 				{hasSublist && (
-					<>{subMenuCollapsed[linkText] ? <ExpandLess /> : <ExpandMore />}</>
+					<>
+						{subMenuCollapsed[linkText] ? (
+							<ExpandLess sx={{ color: (theme) => theme.palette.info.light }} />
+						) : (
+							<ExpandMore sx={{ color: (theme) => theme.palette.info.light }} />
+						)}
+					</>
 				)}
 			</ListItem>
 			<Collapse in={subMenuCollapsed[linkText]} timeout="auto" unmountOnExit>
@@ -62,7 +75,11 @@ export const DrawerCollapsibleList = ({
 							>
 								<ListItemIcon>{item.icon}</ListItemIcon>
 								<ListItemText
-									primary={<Typography variant="body2">{item.label}</Typography>}
+									primary={
+										<Typography color="primary.light" variant="body2">
+											{item.label}
+										</Typography>
+									}
 								/>
 							</ListItemButton>
 						))}

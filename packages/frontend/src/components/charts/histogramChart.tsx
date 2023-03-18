@@ -30,8 +30,9 @@ export const HistogramChart = (): JSX.Element => {
 
 	const options: Highcharts.Options = {
 		chart: { reflow: true },
+		colors: ["#5048E5", "#10B981", "#001E47"],
 		title: {
-			text: "Histogram Chart",
+			text: "Sample chart",
 		},
 
 		xAxis: [

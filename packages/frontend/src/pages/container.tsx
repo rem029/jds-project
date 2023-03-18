@@ -6,7 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { Header, Drawer } from "components";
 import { useWindowDimensions } from "hooks/useWindowDimensions";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const MainContainer = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
 	open?: boolean;
@@ -42,7 +42,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 	overflow: "hidden",
 }));
 
-export const Main = (): JSX.Element => {
+export const PageContainer = (): JSX.Element => {
 	const [open, setOpen] = React.useState(false);
 	const { width: screenWidth } = useWindowDimensions();
 

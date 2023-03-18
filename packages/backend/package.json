@@ -11,6 +11,8 @@
 		"dev": "nodemon --exec ts-node-dev -r tsconfig-paths/register ./src/index.ts DEBUG=knex:query",
 		"clean-logs": "rimraf ./src/__logs",
 		"lint": "eslint src/**/*.ts",
+		"migrate-latest": "knex migrate:latest",
+		"migrate-rollback": "knex migrate:rollback",
 		"db-create": "set PGPASSWORD=123& createdb -U postgres -p 5433 -O postgres jds-db",
 		"db-import": "set PGPASSWORD=123& psql -U postgres -p 5433 jds-db < ./sql/jds-db.sql"
 	},

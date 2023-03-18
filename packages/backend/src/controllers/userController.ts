@@ -2,7 +2,7 @@ import { knexPostgres } from "services/database";
 import { UserInfo } from "@jds-project/common";
 import { logger } from "utilities/logger";
 
-export const getUserInfoController = async (body: { email: string }): Promise<UserInfo> => {
+export const getUserMeInfoController = async (body: { email: string }): Promise<UserInfo> => {
 	const { email } = body;
 	logger.info("@getUserInfoController");
 
@@ -20,5 +20,23 @@ export const getUserInfoController = async (body: { email: string }): Promise<Us
 	if (!results.rows.length) throw new Error("No user found");
 
 	const response = { ...results.rows[0] } as UserInfo;
+	return response;
+};
+
+export const getUserInfoController = async (): Promise<UserInfo[]> => {
+	logger.info("@getUserInfoController");
+
+	const results = await knexPostgres.raw(
+		`
+			SELECT 
+				*
+			FROM 
+				common.users
+			ORDER BY
+				created_at DESC`,
+		[]
+	);
+
+	const response = results.rows as UserInfo[];
 	return response;
 };

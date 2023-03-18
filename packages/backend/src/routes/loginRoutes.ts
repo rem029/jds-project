@@ -22,7 +22,7 @@ const initializeRouter = (): Router => {
 				});
 			})
 			.catch((error) => {
-				logger.error(`@loginController.Error ${error}`);
+				logger.error(`@loginController.Error ${error.message}`);
 				handleServerError(res, req, 500, {
 					success: false,
 					message: "Login error",

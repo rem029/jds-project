@@ -17,8 +17,9 @@ export const LineChart = (): JSX.Element => {
 
 	const options: Highcharts.Options = {
 		chart: { reflow: true },
-		title: { text: "Line chart" },
+		title: { text: "Sample line chart" },
 		series: [{ type: "areaspline", data: [0, 1, 3, 0, 3, 1, 2, 3, 1, 0] }],
+		colors: ["#5048E5", "#10B981", "#001E47"],
 	};
 
 	return (
