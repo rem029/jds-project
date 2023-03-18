@@ -51,6 +51,11 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           source: 'packages/backend/dist'
           target: '/var/www/jds.rem029.com/'
+          script: |
+            whoami
+            echo "$HOST"
+            echo "$KEY"
+            ls -a
       - name: Reload server
         uses: appleboy/ssh-action@master
         with:
