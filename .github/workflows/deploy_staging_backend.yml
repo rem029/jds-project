@@ -62,4 +62,4 @@ jobs:
             whoami
             PATH=$PATH:/${{secrets.SSH_USER}}/.npm-global/bin
             cd /var/www/jds.rem029.com/
-            pm2 reload ${{ secrets.PM2_APP_NAME }}
+            pm2 reload pm-app-staging
