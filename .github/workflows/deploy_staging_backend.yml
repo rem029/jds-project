@@ -67,4 +67,7 @@ jobs:
             whoami
             PATH=$PATH:/${{secrets.SSH_USER}}/.npm-global/bin
             cd /var/www/jds.rem029.com/
+            git pull origin main
+            yarn bootstrap
+            yarn migrate-latest
             pm2 reload jds-app-staging
