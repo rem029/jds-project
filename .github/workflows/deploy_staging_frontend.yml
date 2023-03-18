@@ -31,7 +31,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v1.3
         with:
           envkey_PORT: 1358
-          envkey_REACT_APP_API_URL: "https://api.jds.rem029.com"
+          envkey_REACT_APP_API_URL: "http://api.jds.rem029.com"
           envkey_REACT_APP_APP_NAME: "JDS"
           envkey_REACT_APP_OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
           directory: 'packages/frontend/'
