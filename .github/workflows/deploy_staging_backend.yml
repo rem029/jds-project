@@ -46,6 +46,15 @@ jobs:
             echo "$HOST"
             echo "$KEY"
             ls -a
+      - name: Deploy backend .env file
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: 'packages/backend/.env'
+          target: '/var/www/jds.rem029.com/'
       - run: yarn build:backend
       - name: Deploy backend
         uses: appleboy/scp-action@master
