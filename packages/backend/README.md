@@ -1,4 +1,4 @@
-# Welcome to wakra-server 👋
+# Welcome to jds-server 👋
 
 ![Version](https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000)
 [![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](#)
