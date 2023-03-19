@@ -65,10 +65,10 @@ const dateNow = (timezone) =>
 
 const init = async () => {
   try {
-    const shouldAdd = faker.datatype.boolean;
+    const shouldAdd = faker.datatype.boolean();
 
     if (!shouldAdd) {
-      console.log("Skip adding this time");
+      console.log(dateNow("Asia/Qatar"), "Skip adding this time");
       return;
     }
 
