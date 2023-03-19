@@ -1,4 +1,4 @@
-# Welcome to wakra-project 👋
+# Welcome to jds-project 👋
 
 > Typescript React + Node
 
@@ -135,9 +135,6 @@ wakra-project/packages/
   - Frontend UI for wakra-project
 ### [common](packages/common/)
   - Shared types between backend and frontend. Mostly used to API response data types.
-
-# Jira Link
-https://elawrenceponce.atlassian.net/jira/software/projects/APM/boards/3/roadmap
 
 # Author
 
