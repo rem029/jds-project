@@ -82,7 +82,7 @@ const DataGridCustomToolbar = ({
 export const IssueDataGrid = (): JSX.Element => {
 	const [showOnlyAssignedToMe, setShowOnlyAssignedToMe] = useState(false);
 	const [quickFilter, setQuickFilter] = useState("");
-	const [userId, setUserId] = useState(-1);
+	const [userId, setUserId] = useState("");
 
 	const { enqueueSnackbar } = useSnackbar();
 	const { id: selectedIssueId } = useParams();
@@ -122,7 +122,7 @@ export const IssueDataGrid = (): JSX.Element => {
 			});
 
 		if (!userLoading && userSuccess && userData) {
-			setUserId(userData.id);
+			setUserId(userData.email);
 		}
 	}, [userData, userLoading, userSuccess, userError]);
 
@@ -164,7 +164,7 @@ export const IssueDataGrid = (): JSX.Element => {
 					items: showOnlyAssignedToMe
 						? [
 								{
-									columnField: "id",
+									columnField: "assigned_user_email",
 									operatorValue: "equals",
 									value: userId as unknown as string,
 								},
@@ -187,7 +187,6 @@ export const IssueDataGrid = (): JSX.Element => {
 						setQuickFilter,
 					},
 				}}
-				disableColumnFilter
 				hideFooterSelectedRowCount
 				autoHeight
 				headerHeight={80}
