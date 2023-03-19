@@ -65,6 +65,13 @@ const dateNow = (timezone) =>
 
 const init = async () => {
   try {
+    const shouldAdd = faker.datatype.boolean;
+
+    if (!shouldAdd) {
+      console.log("Skip adding this time");
+      return;
+    }
+
     console.log(
       dateNow("Asia/Qatar"),
       "Loading env from",
