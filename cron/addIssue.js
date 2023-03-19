@@ -51,11 +51,32 @@ const addIssue = async (token, title, description, status) => {
   return success;
 };
 
+const dateNow = (timezone) =>
+  new Date().toLocaleString("en-us", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: timezone,
+    timeZoneName: "short",
+    hour12: false,
+  });
+
 const init = async () => {
   try {
-    console.log("Loading env from", __dirname + "/" + ".env");
-    console.log("Adding issue for", DEMO_URL);
-    console.log("Using creds of", DEMO_USER_NAME, DEMO_USER_PW);
+    console.log(
+      dateNow("Asia/Qatar"),
+      "Loading env from",
+      __dirname + "/" + ".env"
+    );
+    console.log(dateNow("Asia/Qatar"), "Adding issue for", DEMO_URL);
+    console.log(
+      dateNow("Asia/Qatar"),
+      "Using creds of",
+      DEMO_USER_NAME,
+      DEMO_USER_PW
+    );
 
     const token = await login(DEMO_USER_NAME, DEMO_USER_PW);
     const success = await addIssue(
@@ -65,9 +86,9 @@ const init = async () => {
       "todo"
     );
 
-    console.log(success);
+    console.log(dateNow("Asia/Qatar"), "Success");
   } catch (error) {
-    console.error(error.message);
+    console.error(dateNow("Asia/Qatar"), "Error", error.message);
   }
 };
 
