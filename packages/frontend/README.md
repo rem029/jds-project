@@ -2,7 +2,7 @@
 
 ![Version](https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000)
 
-> Front end for wakra project
+> Front end for jds project
 
 ## Install
 
