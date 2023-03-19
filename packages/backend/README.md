@@ -3,7 +3,7 @@
 ![Version](https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000)
 [![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](#)
 
-> Back end for wakra project
+> Back end for jds project
 
 ## Install
 
