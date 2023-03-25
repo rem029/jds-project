@@ -14,9 +14,9 @@ import {
 	CircularProgress,
 } from "@mui/material";
 import { useAxios } from "hooks/useAxios";
-import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { URL_ISSUES, NOTISTACK_AUTO_HIDE_MS } from "utils/constants";
+import { getUserContext } from "store/userProvider";
+import { URL_ISSUES } from "utils/constants";
 import { getToken } from "utils/storage";
 import { IssueFormEdit } from "./issueEdit";
 import { IssueFormSkeleton } from "./issueSkeleton";
@@ -35,7 +35,7 @@ export const IssueForm = ({
 	handleClose,
 	formTypeParam = "view",
 }: IssueFormInterface): JSX.Element => {
-	const { enqueueSnackbar } = useSnackbar();
+	const { notify } = getUserContext();
 	const [formType, setFormType] = useState<FormType>(formTypeParam);
 	const [fields, setFields] = useState<IssueInfo | undefined>();
 
@@ -60,19 +60,8 @@ export const IssueForm = ({
 	} = useAxios<boolean>(URL_ISSUES + "/" + issueId);
 
 	useEffect(() => {
-		if (issuesError) {
-			enqueueSnackbar(issuesError.message, {
-				variant: "error",
-				autoHideDuration: NOTISTACK_AUTO_HIDE_MS,
-			});
-		}
-
-		if (updateIssueError) {
-			enqueueSnackbar(updateIssueError.message, {
-				variant: "error",
-				autoHideDuration: NOTISTACK_AUTO_HIDE_MS,
-			});
-		}
+		if (issuesError) notify({ message: issuesError.message, variant: "error" });
+		if (updateIssueError) notify({ message: updateIssueError.message, variant: "error" });
 	}, [issuesError, updateIssueError]);
 
 	useEffect(() => {
@@ -98,21 +87,13 @@ export const IssueForm = ({
 			.then((response) => {
 				const { message, success } = response;
 
-				if (success) {
-					enqueueSnackbar(message, {
-						variant: "success",
-						autoHideDuration: NOTISTACK_AUTO_HIDE_MS,
-					});
-				}
+				if (success) notify({ message: message, variant: "success" });
 
 				setFormType("view");
 				issueFetch();
 			})
 			.catch((error) => {
-				enqueueSnackbar(error.message, {
-					variant: "error",
-					autoHideDuration: NOTISTACK_AUTO_HIDE_MS,
-				});
+				notify({ message: error.message, variant: "error" });
 			});
 	};
 

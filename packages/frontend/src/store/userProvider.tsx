@@ -1,11 +1,14 @@
 import { createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteToken } from "utils/storage";
-import { useSnackbar } from "notistack";
+import { useSnackbar, VariantType } from "notistack";
 import { NOTISTACK_AUTO_HIDE_MS } from "utils/constants";
 
+type NotifyType = { message: string; variant?: VariantType };
 interface UserContextInterface {
 	logout: () => void;
+	// eslint-disable-next-line no-unused-vars
+	notify: (params: NotifyType) => void;
 }
 
 const userContext = createContext({} as UserContextInterface);
@@ -19,11 +22,21 @@ export const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
 	const navigate = useNavigate();
 	const { enqueueSnackbar } = useSnackbar();
 
+	const notify = (params: NotifyType): void => {
+		const { message, variant } = params;
+
+		enqueueSnackbar(message, {
+			autoHideDuration: NOTISTACK_AUTO_HIDE_MS,
+			preventDuplicate: true,
+			variant: variant,
+		});
+	};
+
 	const logout = (): void => {
 		deleteToken();
 		navigate("/login");
-		enqueueSnackbar("Logout successful.", { autoHideDuration: NOTISTACK_AUTO_HIDE_MS });
+		notify({ message: "Logout successful" });
 	};
 
-	return <Provider value={{ logout: logout }}>{children}</Provider>;
+	return <Provider value={{ logout: logout, notify: notify }}>{children}</Provider>;
 };

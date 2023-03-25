@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
-import { useSnackbar } from "notistack";
 import { getUserContext } from "store/userProvider";
-import { NOTISTACK_AUTO_HIDE_MS } from "utils/constants";
 
 export interface AxiosRequestCustomConfig extends AxiosRequestConfig {
 	dontLogoutOnAuthError?: boolean;
@@ -40,8 +38,7 @@ export const useAxios = <T>(
 	}, [config]);
 
 	const [axiosController, setAxiosController] = useState<AbortController>();
-	const { logout } = getUserContext();
-	const { enqueueSnackbar } = useSnackbar();
+	const { logout, notify } = getUserContext();
 
 	useEffect(() => {
 		if ((axiosConfig && axiosConfig?.method === "get") || axiosConfig?.method === "GET") {
@@ -93,12 +90,10 @@ export const useAxios = <T>(
 			const axiosError: AxiosError = error as AxiosError;
 
 			if (axiosError) {
-				enqueueSnackbar(axiosError.response?.data.message || axiosError.message, {
-					variant: "error",
-					autoHideDuration: NOTISTACK_AUTO_HIDE_MS,
-				});
+				notify({ message: axiosError.response?.data.message, variant: "error" });
 
 				if (axiosError.response?.status === 401 || axiosError.response?.status === 403) {
+					notify({ message: "Unauthorized request.", variant: "error" });
 					if (!configMerged.dontLogoutOnAuthError) {
 						logout();
 					}

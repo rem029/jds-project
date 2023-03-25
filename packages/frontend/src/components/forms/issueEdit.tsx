@@ -4,10 +4,9 @@ import { Grid, Typography, Box, Divider } from "@mui/material";
 import { AutoCompleteInputOptions } from "components/utilities/autoCompleteInput";
 import { dateFormatNative } from "helpers/dateHelper";
 import { useAxios } from "hooks/useAxios";
-import { useSnackbar } from "notistack";
-
 import { useEffect, useMemo } from "react";
-import { NOTISTACK_AUTO_HIDE_MS, URL_USERS } from "utils/constants";
+import { getUserContext } from "store/userProvider";
+import { URL_USERS } from "utils/constants";
 import { MENU_ITEM_STATUS } from "utils/menuItems";
 import { getToken } from "utils/storage";
 import { AutoCompleteInput } from "..";
@@ -23,7 +22,7 @@ export const IssueFormEdit = ({
 	setFields,
 	disableFields = false,
 }: IssueFormEditInterface): JSX.Element => {
-	const { enqueueSnackbar } = useSnackbar();
+	const { notify } = getUserContext();
 
 	const {
 		data: usersData,
@@ -40,10 +39,7 @@ export const IssueFormEdit = ({
 
 	useEffect(() => {
 		if (usersError) {
-			enqueueSnackbar(usersError.message, {
-				variant: "error",
-				autoHideDuration: NOTISTACK_AUTO_HIDE_MS,
-			});
+			notify({ message: usersError.message, variant: "error" });
 		}
 	}, [usersData, usersLoading, usersSuccess, usersError]);
 

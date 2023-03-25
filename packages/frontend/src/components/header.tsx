@@ -2,14 +2,14 @@ import * as React from "react";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { styled, Toolbar, Typography, IconButton, Box } from "@mui/material";
 import { MenuOutlined } from "@mui/icons-material";
-import { NOTISTACK_AUTO_HIDE_MS, URL_USER_INFO } from "utils/constants";
+import { URL_USER_INFO } from "utils/constants";
 import { UserInfo } from "@jds-project/common";
 import { useAxios } from "hooks/useAxios";
 import { getToken } from "utils/storage";
 import { dateHelperFormatProper } from "helpers/dateHelper";
 
 import logo from "../assets/jds-logo.png";
-import { useSnackbar } from "notistack";
+import { getUserContext } from "store/userProvider";
 
 interface AppBarProps extends MuiAppBarProps {
 	open?: boolean;
@@ -35,7 +35,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export const Header = ({ open, setOpen, width }: AppBarProps): JSX.Element => {
-	const { enqueueSnackbar } = useSnackbar();
+	const { notify } = getUserContext();
 	const handleDrawerOpen = (): void => {
 		if (setOpen) setOpen(true);
 	};
@@ -58,10 +58,7 @@ export const Header = ({ open, setOpen, width }: AppBarProps): JSX.Element => {
 	React.useEffect(() => {
 		if (userError) {
 			setUserName("Error");
-			enqueueSnackbar(userError.message, {
-				variant: "warning",
-				autoHideDuration: NOTISTACK_AUTO_HIDE_MS,
-			});
+			notify({ message: userError.message, variant: "warning" });
 		}
 
 		if (!userLoading && userSuccess && userData) {

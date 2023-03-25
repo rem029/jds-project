@@ -22,12 +22,12 @@ import { statusColor } from "helpers/colorHelper";
 import { dateFormatNative } from "helpers/dateHelper";
 import { theme } from "../../theme";
 import { useAxios } from "hooks/useAxios";
-import { useSnackbar } from "notistack";
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { URL_ISSUES, URL_USER_INFO, NOTISTACK_AUTO_HIDE_MS } from "utils/constants";
+import { URL_ISSUES, URL_USER_INFO } from "utils/constants";
 import { getToken } from "utils/storage";
 import { IssueForm } from "..";
+import { getUserContext } from "store/userProvider";
 
 interface DataGridCustomToolbarInterface {
 	showOnlyAssignedToMe: boolean;
@@ -84,7 +84,7 @@ export const IssueDataGrid = (): JSX.Element => {
 	const [quickFilter, setQuickFilter] = useState("");
 	const [userId, setUserId] = useState("");
 
-	const { enqueueSnackbar } = useSnackbar();
+	const { notify } = getUserContext();
 	const { id: selectedIssueId } = useParams();
 	const navigate = useNavigate();
 
@@ -115,11 +115,7 @@ export const IssueDataGrid = (): JSX.Element => {
 	});
 
 	useEffect(() => {
-		if (userError)
-			enqueueSnackbar(userError.message, {
-				variant: "error",
-				autoHideDuration: NOTISTACK_AUTO_HIDE_MS,
-			});
+		if (userError) notify({ message: userError?.message, variant: "error" });
 
 		if (!userLoading && userSuccess && userData) {
 			setUserId(userData.email);
@@ -127,12 +123,7 @@ export const IssueDataGrid = (): JSX.Element => {
 	}, [userData, userLoading, userSuccess, userError]);
 
 	useEffect(() => {
-		if (issuesError) {
-			enqueueSnackbar(issuesError.message, {
-				variant: "error",
-				autoHideDuration: NOTISTACK_AUTO_HIDE_MS,
-			});
-		}
+		if (issuesError) notify({ message: issuesError?.message, variant: "error" });
 	}, [issuesData, issuesLoading, issuesSuccess, issuesError]);
 
 	useEffect(() => {
