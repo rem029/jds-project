@@ -1,31 +1,27 @@
-import { Router, Response, NextFunction } from "express";
+import { Router } from "express";
 import { loginController } from "controllers/loginController";
 import { authenticateLogin } from "middlewares/authUser";
-import { RequestAuthInterface, ErrorServer } from "types";
-import { handleServerResponse } from "helpers/serverResponse";
-import { logger } from "utilities/logger";
+import { RequestAuthInterface } from "types";
+import { handleServerResponse, routerWrapper } from "../../handlers";
 
 const initializeRouter = (): Router => {
 	const router = Router();
 
-	router.post("/", authenticateLogin, (req: RequestAuthInterface, res: Response, next: NextFunction) => {
-		logger.info("@loginRoute");
-		const body = req.user ? req.user : { email: "", password: "" };
+	router.post(
+		"/",
+		authenticateLogin,
+		routerWrapper("loginRoute", async (req: RequestAuthInterface, res, _) => {
+			const body = req.user ? req.user : { email: "", password: "" };
 
-		loginController(body)
-			.then((response) => {
-				handleServerResponse(res, req, 200, {
-					__typename: response.__typename,
-					success: true,
-					message: "Login success",
-					data: response,
-				});
-			})
-			.catch((error: ErrorServer) => {
-				logger.error(`@loginController.Error ${error.message} ${body.email}`);
-				next(error);
+			const response = await loginController(body);
+			handleServerResponse(res, req, 200, {
+				__typename: response.__typename,
+				success: true,
+				message: "Login success",
+				data: response,
 			});
-	});
+		})
+	);
 
 	return router;
 };

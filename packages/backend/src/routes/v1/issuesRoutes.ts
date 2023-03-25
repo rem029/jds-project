@@ -1,8 +1,6 @@
-import express, { Router, Response, NextFunction } from "express";
-import { handleServerResponse } from "../../helpers/serverResponse";
+import express, { Router } from "express";
+import { handleServerResponse, routerWrapper } from "../../handlers";
 import { parseBody } from "../../helpers/parseBody";
-import { ErrorServer, RequestAuthInterface, RequestWithMetrics } from "../../types";
-import { logger } from "../../utilities/logger";
 import { authenticateToken } from "../../middlewares/authToken";
 import {
 	addIssueController,
@@ -15,44 +13,40 @@ import { IssueInfo } from "@jds-project/common";
 const initializeRouter = (): Router => {
 	const router = express.Router();
 
-	router.get("/", authenticateToken, async (req: RequestAuthInterface, res: Response, next: NextFunction) => {
-		try {
-			logger.info("@getIssuesRoute");
-
+	router.get(
+		"/",
+		authenticateToken,
+		routerWrapper("getIssuesRoute", async (req, res, _) => {
 			const response = await getIssuesController();
+
 			handleServerResponse(res, req, 200, {
 				__typename: response[0].__typename,
 				success: true,
 				message: "Get issues success",
 				data: response,
 			});
-		} catch (error) {
-			logger.error(`@getIssuesRoute.Error ${(error as ErrorServer).message}`);
-			next(error);
-		}
-	});
+		})
+	);
 
-	router.get("/:id", authenticateToken, async (req: RequestWithMetrics, res: Response, next: NextFunction) => {
-		try {
-			logger.info("@getIssueRoute");
-
+	router.get(
+		"/:id",
+		authenticateToken,
+		routerWrapper("getIssueRouteById", async (req, res, _) => {
 			const response = await getIssueControllerById(req.params.id as unknown as number);
+
 			handleServerResponse(res, req, 200, {
 				__typename: response.__typename,
 				success: true,
 				message: "Get issue success",
 				data: response,
 			});
-		} catch (error) {
-			logger.error(`@getIssuesRoute.Error ${(error as ErrorServer).message}`);
-			next(error);
-		}
-	});
+		})
+	);
 
-	router.patch("/:id", authenticateToken, async (req: RequestAuthInterface, res: Response, next: NextFunction) => {
-		try {
-			logger.info("@updateIssuesRoute");
-
+	router.patch(
+		"/:id",
+		authenticateToken,
+		routerWrapper("updateIssuesRoute", async (req, res, _) => {
 			const fields = parseBody<IssueInfo>("updateIssueController", req.body, req.headers);
 			const response = await updateIssueController({ ...fields, id: Number(req.params.id) });
 
@@ -62,16 +56,13 @@ const initializeRouter = (): Router => {
 				message: "Update issue success. Notification has been sent.",
 				data: response,
 			});
-		} catch (error) {
-			logger.error(`@updateIssuesRoute.Error ${(error as ErrorServer).message}`);
-			next(error);
-		}
-	});
+		})
+	);
 
-	router.post("/", authenticateToken, async (req: RequestAuthInterface, res: Response, next: NextFunction) => {
-		try {
-			logger.info("@addIssuesRoute");
-
+	router.post(
+		"/",
+		authenticateToken,
+		routerWrapper("addIssuesRoute", async (req, res, _) => {
 			const fields = parseBody<IssueInfo>("addIssueController", req.body, req.headers);
 			const response = await addIssueController(fields);
 
@@ -81,11 +72,8 @@ const initializeRouter = (): Router => {
 				message: "Add issue success.",
 				data: response,
 			});
-		} catch (error) {
-			logger.error(`@addIssuesRoute.Error ${(error as ErrorServer).message}`);
-			next(error);
-		}
-	});
+		})
+	);
 
 	return router;
 };

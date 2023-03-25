@@ -1,49 +1,42 @@
-import express, { Router, Response, NextFunction } from "express";
-import { handleServerResponse } from "../../helpers/serverResponse";
-import { ErrorServer, RequestAuthInterface } from "../../types";
-import { logger } from "../../utilities/logger";
+import express, { Router } from "express";
+import { handleServerResponse, routerWrapper } from "../../handlers";
+import { RequestAuthInterface } from "../../types";
 import { getUserMeInfoController, getUserInfoController } from "../../controllers/userController";
 import { authenticateToken } from "../../middlewares/authToken";
 
 const initializeRouter = (): Router => {
 	const router = express.Router();
 
-	router.get("/me", authenticateToken, async (req: RequestAuthInterface, res: Response, next: NextFunction) => {
-		logger.info("@getUsersInfoRoute");
-		const { email } = req.user ? req.user : { email: "" };
+	router.get(
+		"/me",
+		authenticateToken,
+		routerWrapper("getUsersInfoRoute", async (req: RequestAuthInterface, res, _) => {
+			const { email } = req.user ? req.user : { email: "" };
+			const response = await getUserMeInfoController({ email });
 
-		getUserMeInfoController({ email })
-			.then((response) => {
-				handleServerResponse(res, req, 200, {
-					__typename: response.__typename,
-					success: true,
-					message: "Get user info success",
-					data: response,
-				});
-			})
-			.catch((error: ErrorServer) => {
-				logger.error(`@getUserMeInfoController.Error ${error.message}`);
-				next(error);
+			handleServerResponse(res, req, 200, {
+				__typename: response.__typename,
+				success: true,
+				message: "Get user info success",
+				data: response,
 			});
-	});
+		})
+	);
 
-	router.get("/", authenticateToken, async (req: RequestAuthInterface, res: Response, next: NextFunction) => {
-		logger.info("@getUsersInfoRoute");
+	router.get(
+		"/",
+		authenticateToken,
+		routerWrapper("getUsersInfoRoute", async (req, res, _) => {
+			const response = await getUserInfoController();
 
-		getUserInfoController()
-			.then((response) => {
-				handleServerResponse(res, req, 200, {
-					__typename: response[0].__typename,
-					success: true,
-					message: "Get user info success",
-					data: response,
-				});
-			})
-			.catch((error: ErrorServer) => {
-				logger.error(`@getUsersInfoController.Error ${error.message}`);
-				next(error);
+			handleServerResponse(res, req, 200, {
+				__typename: response[0].__typename,
+				success: true,
+				message: "Get user info success",
+				data: response,
 			});
-	});
+		})
+	);
 
 	return router;
 };

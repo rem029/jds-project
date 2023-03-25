@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
 import { logger } from "utilities/logger";
 import { RequestAuthInterface } from "types";
-import { handleServerError } from "helpers/serverResponse";
+import { handleServerError } from "../handlers";
 
 const verifyBodyCreateUser = (reqBody: any): { isAccepted: boolean; message: string } => {
 	const hasEmail = reqBody.email && reqBody.email;

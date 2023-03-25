@@ -4,7 +4,7 @@ import cors from "cors";
 import { v1Router } from "routes/v1";
 import { v2Router } from "routes/v2";
 import { RequestWithMetrics } from "types";
-import { errorHandler } from "helpers/serverResponse";
+import { errorHandler } from "../handlers";
 
 const initializeAppExpress = (): Express => {
 	const app = express();
