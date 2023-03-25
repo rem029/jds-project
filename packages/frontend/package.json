@@ -1,6 +1,6 @@
 {
 	"name": "@jds-project/frontend",
-	"description": "Frontend for wakra project",
+	"description": "Frontend for jds project",
 	"version": "1.1.0-alpha.13",
 	"private": true,
 	"dependencies": {

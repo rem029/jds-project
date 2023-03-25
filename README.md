@@ -58,7 +58,7 @@ Font family and color palette to be configure here.
 ## Note
 ### .env file location
 ```
-wakra-project/
+jds-project/
 ```
 ### .env format
 ```
@@ -126,13 +126,13 @@ tech(user-input): refactor debounce.
 Path
 
 ```
-wakra-project/packages/
+jds-project/packages/
 ```
 
 ### [backend](packages/backend/)
-  - Backend server for wakra-project
+  - Backend server for jds-project
 ### [frontend](packages/frontend/)
-  - Frontend UI for wakra-project
+  - Frontend UI for jds-project
 ### [common](packages/common/)
   - Shared types between backend and frontend. Mostly used to API response data types.
 
