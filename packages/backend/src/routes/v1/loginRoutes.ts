@@ -1,14 +1,14 @@
-import { Router, Response } from "express";
+import { Router, Response, NextFunction } from "express";
 import { loginController } from "controllers/loginController";
 import { authenticateLogin } from "middlewares/authUser";
-import { RequestAuthInterface } from "types";
-import { handleServerResponse, handleServerError } from "helpers/serverResponse";
+import { RequestAuthInterface, ErrorServer } from "types";
+import { handleServerResponse } from "helpers/serverResponse";
 import { logger } from "utilities/logger";
 
 const initializeRouter = (): Router => {
 	const router = Router();
 
-	router.post("/", authenticateLogin, (req: RequestAuthInterface, res: Response) => {
+	router.post("/", authenticateLogin, (req: RequestAuthInterface, res: Response, next: NextFunction) => {
 		logger.info("@loginRoute");
 		const body = req.user ? req.user : { email: "", password: "" };
 
@@ -21,13 +21,9 @@ const initializeRouter = (): Router => {
 					data: response,
 				});
 			})
-			.catch((error) => {
-				logger.error(`@loginController.Error ${error.message}`);
-				handleServerError(res, req, 500, {
-					success: false,
-					message: "Login error",
-					errorMessage: (error as Error).message,
-				});
+			.catch((error: ErrorServer) => {
+				logger.error(`@loginController.Error ${error.message} ${body.email}`);
+				next(error);
 			});
 	});
 

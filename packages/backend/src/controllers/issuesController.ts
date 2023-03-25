@@ -2,14 +2,18 @@ import { knexPostgres } from "services/database";
 import { logger } from "../utilities/logger";
 import { IssueInfo } from "@jds-project/common";
 import { sendMail } from "../helpers/emailHelper";
+import { ErrorServer } from "types";
 
-export const getIssuesController = async (): Promise<IssueInfo[]> => {
+export const getIssuesController = async (text?: string): Promise<IssueInfo[]> => {
 	logger.info("@getIssuesController");
+
+	const textSearch = text ? `%${text}%` : "%%";
 
 	const results = await knexPostgres.raw(
 		`		
 		SELECT 
-			common.issues.id,title,
+			common.issues.id,
+			title,
 			description,
 			assigned_user_id,
 			email as assigned_user_email,
@@ -22,9 +26,16 @@ export const getIssuesController = async (): Promise<IssueInfo[]> => {
 			common.users
 		ON
 			assigned_user_id = common.users.id
+		WHERE
+			title LIKE ?
+		OR
+			description LIKE ?
+		OR
+			email LIKE ?
 		ORDER BY
 			common.issues.created_at DESC;	
-        `
+        `,
+		[textSearch, textSearch, textSearch]
 	);
 
 	const response = results.rows as IssueInfo[];
@@ -32,7 +43,7 @@ export const getIssuesController = async (): Promise<IssueInfo[]> => {
 	return response;
 };
 
-export const getIssueController = async (id: number): Promise<IssueInfo> => {
+export const getIssueControllerById = async (id: number): Promise<IssueInfo> => {
 	logger.info("@getIssueController", id);
 
 	const results = await knexPostgres.raw(
@@ -59,7 +70,7 @@ export const getIssueController = async (id: number): Promise<IssueInfo> => {
 		[id]
 	);
 
-	if (!results.rows.length) throw new Error("No issue found");
+	if (!results.rows.length) throw new ErrorServer(404, "No issue found");
 	const response = { ...results.rows[0] } as IssueInfo;
 
 	return response;

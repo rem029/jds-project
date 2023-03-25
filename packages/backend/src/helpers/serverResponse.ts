@@ -1,6 +1,6 @@
-import { Response } from "express";
+import { ErrorRequestHandler, NextFunction, Response } from "express";
 import { logger } from "utilities/logger";
-import { ResponseInterface, RequestAuthInterface } from "../types";
+import { ResponseInterface, RequestAuthInterface, ErrorServer } from "../types";
 
 export const handleServerResponse = <T>(
 	res: Response,
@@ -24,6 +24,7 @@ export const handleServerError = <T>(
 	code: number,
 	payload: ResponseInterface<T>
 ): void => {
+	code = code ? code : 500;
 	const endTime = new Date();
 	const startTime = req.startTime ? req.startTime.getTime() : 0;
 	logger.error(`Route: ${req.url}`);
@@ -32,4 +33,14 @@ export const handleServerError = <T>(
 	logger.error(`responseTime(ms): ${endTime.getTime() - startTime}`);
 	logger.error(`@handleError ${code} payload: ${JSON.stringify(payload)}`);
 	res.status(code).json(payload);
+};
+
+export const errorHandler: ErrorRequestHandler = (
+	err: ErrorServer,
+	req: RequestAuthInterface,
+	res: Response,
+	// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+	next: NextFunction
+): void => {
+	handleServerError(res, req, err.statusCode, { success: false, message: "error handler FN " + err.message });
 };

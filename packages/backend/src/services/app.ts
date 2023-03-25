@@ -1,11 +1,10 @@
 import express, { Express } from "express";
 import cors from "cors";
 
-import { loginRoute } from "routes/loginRoutes";
-import { userRoutes } from "routes/usersRoutes";
-import { issuesRoutes } from "routes/issuesRoutes";
+import { v1Router } from "routes/v1";
+import { v2Router } from "routes/v2";
 import { RequestWithMetrics } from "types";
-import { elapsedTime } from "helpers/now";
+import { errorHandler } from "helpers/serverResponse";
 
 const initializeAppExpress = (): Express => {
 	const app = express();
@@ -19,27 +18,17 @@ const initializeAppExpress = (): Express => {
 	app.use(express.json());
 	app.use(cors(corsOptions));
 
+	const startDate = new Date();
+
 	app.all("*", (req: RequestWithMetrics, _, next) => {
 		req.startTime = new Date(new Date().getTime());
+		req.startDate = startDate;
 		next();
 	});
 
-	app.use("/login", loginRoute);
-	app.use("/users", userRoutes);
-	app.use("/issues", issuesRoutes);
-	const startDate = new Date();
-	//Default routes
-	app.get("/test", async (_, res) => {
-		res.json({
-			status: "running",
-			started: startDate.toUTCString(),
-			upTime: elapsedTime(startDate.getTime(), new Date().getTime()),
-		});
-	});
-
-	app.get("/favicon.ico", async (_, res) => {
-		res.redirect("/");
-	});
+	app.use("/", v1Router);
+	app.use("/v2", v2Router);
+	app.use(errorHandler);
 
 	return app;
 };

@@ -2,8 +2,7 @@ import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
 import { logger } from "utilities/logger";
 import { UserInfo, Token } from "@jds-project/common";
-import { RequestAuthInterface } from "types";
-import { handleServerError } from "helpers/serverResponse";
+import { ErrorServer, RequestAuthInterface } from "types";
 
 export const generateAccessToken = (payload: object, expiresIn = "24h"): Token => {
 	console.log("@generateAccessToken", payload);
@@ -33,11 +32,7 @@ export const authenticateToken = (req: RequestAuthInterface, res: Response, next
 	const token = tokenFromHeader && tokenFromHeader.split(" ")[1];
 
 	if (!token) {
-		handleServerError(res, req, 403, {
-			success: false,
-			message: "A token is required for authentication",
-		});
-		return;
+		throw new ErrorServer(403, "A token is required for authentication.");
 	}
 
 	try {
@@ -46,10 +41,7 @@ export const authenticateToken = (req: RequestAuthInterface, res: Response, next
 		req.user = { email: decodedUser.email };
 	} catch (error) {
 		logger.error(`@middleware authenticateToken error: ${JSON.stringify(error)}`);
-		return handleServerError(res, req, 401, {
-			success: false,
-			message: "Token has expired or invalid.",
-		});
+		next(new ErrorServer(401, "Token has expired or invalid."));
 	}
 	next();
 };

@@ -1,6 +1,7 @@
 import { IssueInfo } from "@jds-project/common";
 import formData from "form-data";
 import Mailgun from "mailgun.js";
+import { ErrorServer } from "types";
 
 export const sendMail = async (issueInfo: IssueInfo): Promise<void> => {
 	try {
@@ -31,6 +32,6 @@ export const sendMail = async (issueInfo: IssueInfo): Promise<void> => {
 			}),
 		});
 	} catch (error) {
-		throw new Error("Error while sending mail: " + (error as Error).message);
+		throw new ErrorServer(500, "Error while sending mail: " + (error as ErrorServer).message);
 	}
 };

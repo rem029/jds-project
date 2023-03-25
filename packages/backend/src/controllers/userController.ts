@@ -1,6 +1,7 @@
 import { knexPostgres } from "services/database";
 import { UserInfo } from "@jds-project/common";
 import { logger } from "utilities/logger";
+import { ErrorServer } from "types";
 
 export const getUserMeInfoController = async (body: { email: string }): Promise<UserInfo> => {
 	const { email } = body;
@@ -17,7 +18,7 @@ export const getUserMeInfoController = async (body: { email: string }): Promise<
 		[email]
 	);
 
-	if (!results.rows.length) throw new Error("No user found");
+	if (!results.rows.length) throw new ErrorServer(400, "No user found");
 
 	const response = { ...results.rows[0] } as UserInfo;
 	return response;
