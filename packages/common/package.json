@@ -1,6 +1,6 @@
 {
 	"name": "@jds-project/common",
-	"version": "1.1.0-alpha.11",
+	"version": "1.1.0-alpha.13",
 	"description": "common types/functions for frontend and backend",
 	"main": "src/index.ts",
 	"files": [

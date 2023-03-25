@@ -1,12 +1,12 @@
 {
 	"name": "@jds-project/frontend",
 	"description": "Frontend for wakra project",
-	"version": "1.1.0-alpha.12",
+	"version": "1.1.0-alpha.13",
 	"private": true,
 	"dependencies": {
 		"@emotion/react": "^11.9.0",
 		"@emotion/styled": "^11.8.1",
-		"@jds-project/common": "^1.1.0-alpha.11",
+		"@jds-project/common": "^1.1.0-alpha.13",
 		"@mui/icons-material": "^5.6.1",
 		"@mui/lab": "^5.0.0-alpha.75",
 		"@mui/material": "^5.6.1",
