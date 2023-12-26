@@ -22,7 +22,7 @@ const initializeAppExpress = (): Express => {
 	const startDate = new Date();
 
 	app.all("*", (req: RequestWithMetrics, _, next) => {
-		const ip = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.connection.remoteAddress;
+		const ip = req.headers["x-forwarded-for"] || req.headers["x-real-ip"] || req.connection.remoteAddress;
 		req.startTime = new Date(new Date().getTime());
 		req.startDate = startDate;
 		logger.info(`Requested from IP: ${ip}`);
