@@ -5,6 +5,7 @@ import { v1Router } from "routes/v1";
 import { v2Router } from "routes/v2";
 import { RequestWithMetrics } from "types";
 import { errorHandler } from "../handlers";
+import { logger } from "utilities/logger";
 
 const initializeAppExpress = (): Express => {
 	const app = express();
@@ -21,8 +22,10 @@ const initializeAppExpress = (): Express => {
 	const startDate = new Date();
 
 	app.all("*", (req: RequestWithMetrics, _, next) => {
+		const ip = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.connection.remoteAddress;
 		req.startTime = new Date(new Date().getTime());
 		req.startDate = startDate;
+		logger.info(`Requested from IP: ${ip}`);
 		next();
 	});
 
